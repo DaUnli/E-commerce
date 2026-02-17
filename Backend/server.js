@@ -3,45 +3,62 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
-import authRoutes from "./routes/Auth.js";
+
+import authRoutes from "./routes/authRoutes.js";
+import productRoutes from "./routes/productRoutes.js";
 
 dotenv.config();
+
 const app = express();
 
-// Middleware
+
+// ================= MIDDLEWARE =================
 app.use(cors({
-    origin: "http://localhost:5173", 
-    credentials: true,
+  origin: "http://localhost:5173",
+  credentials: true,
 }));
+
 app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // Added for form data
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// Routes
-app.use("/api", authRoutes);
+
+// ================= ROUTES =================
+app.use("/api/auth", authRoutes);
+app.use("/api/products", productRoutes);
 
 app.get("/", (req, res) => {
-    res.json({ message: "API is running..." });
+  res.json({ message: "API is running..." });
 });
 
-// Database Connection
-mongoose
-    .connect(process.env.MONGO_URI)
-    .then(() => {
-        console.log("✅ MongoDB connected");
-    })
-    .catch((err) => {
-        console.error("❌ MongoDB connection error:", err);
-        process.exit(1); // Stop the process if DB fails
-    });
 
-// Global Error Handler
+// ================= DATABASE =================
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log("✅ MongoDB connected");
+  })
+  .catch((err) => {
+    console.error("❌ MongoDB connection error:", err);
+    process.exit(1);
+  });
+
+
+// ================= GLOBAL ERROR HANDLER =================
 app.use((err, req, res, next) => {
-    const statusCode = err.statusCode || 500;
-    res.status(statusCode).json({
-        success: false,
-        message: err.message || "Internal Server Error",
-    });
+  console.error(err.stack);
+
+  const statusCode = err.statusCode || 500;
+
+  res.status(statusCode).json({
+    success: false,
+    message: err.message || "Internal Server Error",
+  });
 });
 
-app.listen(process.env.PORT, () => console.log(`🚀 Server running on port ${process.env.PORT}`));
+
+// ================= SERVER =================
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () =>
+  console.log(`🚀 Server running on port ${PORT}`)
+);

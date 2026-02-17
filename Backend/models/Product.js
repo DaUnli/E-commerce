@@ -15,11 +15,13 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: [true, "Please enter product price"],
       default: 0,
+      min: [0, "Price cannot be negative"],
     },
     stock: {
       type: Number,
       required: [true, "Please enter product stock"],
       default: 0,
+      min: [0, "Stock cannot be negative"],
     },
     category: {
       type: String,
@@ -37,17 +39,20 @@ const productSchema = new mongoose.Schema(
         },
       },
     ],
-    // ------------------------------------
+
     ratings: {
       type: Number,
       default: 0,
+      min: 0,
+      max: 5,
     },
+
     numOfReviews: {
       type: Number,
       default: 0,
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 export default mongoose.model("Product", productSchema);
