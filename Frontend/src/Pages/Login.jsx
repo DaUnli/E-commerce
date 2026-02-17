@@ -1,160 +1,80 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import AOS from "aos";
-import "aos/dist/aos.css";
+import React from "react";
 
-// Helper function for email validation
-const validateEmail = (email) => {
-  return String(email)
-    .toLowerCase()
-    .match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
-};
-
-const AuthPage = () => {
-  const [isLogin, setIsLogin] = useState(true);
-  const [name, setName] = useState(""); // Only for Register
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    AOS.init({ duration: 1000 });
-  }, []);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setMessage("");
-
-    // 1. Basic Validation
-    if (!validateEmail(email)) {
-      setMessage("❌ Please enter a valid email");
-      setLoading(false);
-      return;
-    }
-
-    if (!isLogin && name.length < 2) {
-      setMessage("❌ Name must be at least 2 characters");
-      setLoading(false);
-      return;
-    }
-
-    // 2. Setup URL and Payload
-    const url = isLogin
-      ? "http://localhost:5000/api/auth/login"
-      : "http://localhost:5000/api/auth/register";
-
-    const payload = isLogin 
-      ? { email, password } 
-      : { name, email, password };
-
-    try {
-      const res = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include", // Crucial for receiving cookies
-        body: JSON.stringify(payload),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        setMessage(`❌ ${data.message || "Something went wrong"}`);
-        setLoading(false);
-        return;
-      }
-
-      if (isLogin) {
-        setMessage("✅ Login successful!");
-        // Store user info in local storage if needed
-        localStorage.setItem("user", JSON.stringify(data.user));
-        setTimeout(() => navigate("/home"), 1000);
-      } else {
-        setMessage("✅ Registration successful! Redirecting to login...");
-        setTimeout(() => {
-          setIsLogin(true);
-          setMessage("");
-        }, 2000);
-      }
-    } catch (error) {
-      setMessage("❌ Cannot connect to server");
-    } finally {
-      setLoading(false);
-    }
-  };
-
+const Login = () => {
   return (
-    <div className="bg-gradient-to-br from-gray-900 via-indigo-900 to-purple-900 min-h-screen flex flex-col items-center justify-center px-4 font-sans">
-      <div
-        className="bg-gray-800 bg-opacity-90 rounded-2xl shadow-2xl p-8 w-full max-w-sm"
-        data-aos="fade-down"
-      >
-        <h1 className="text-3xl font-bold text-center text-white mb-6">
-          {isLogin ? "Welcome Back" : "Create Account"}
-        </h1>
+    <div className="min-h-screen bg-gray-50 text-slate-800 font-sans">
+      {/* Top Navigation */}
+      <header className="bg-white border-b sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-2 text-orange-600 font-bold text-xl">
+            <div className="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center text-white">
+              O
+            </div>
+            Odaplace
+          </div>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          {/* SHOW NAME FIELD ONLY DURING REGISTRATION */}
-          {!isLogin && (
+          <div className="flex-1 max-w-2xl flex items-center bg-gray-100 rounded-full px-4 py-2 border">
             <input
               type="text"
-              placeholder="Full Name"
-              value={name}
-              required
-              onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl bg-gray-700 text-white placeholder-gray-300 border border-gray-600 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 outline-none transition"
+              placeholder="Asus"
+              className="bg-transparent flex-1 outline-none px-2"
             />
-          )}
+            <button className="bg-orange-600 text-white px-6 py-1.5 rounded-full font-medium">
+              Search
+            </button>
+          </div>
 
-          <input
-            type="email"
-            placeholder="Email Address"
-            value={email}
-            required
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-4 py-3 rounded-xl bg-gray-700 text-white placeholder-gray-300 border border-gray-600 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 outline-none transition"
+          <div className="flex items-center gap-4 text-gray-500">
+            {/* Icons for User, Cart, Notification */}
+            <div className="w-8 h-8 rounded-full bg-gray-200" />
+          </div>
+        </div>
+      </header>
+
+      <main className="max-w-7xl mx-auto flex py-6 px-4 gap-8">
+        {/* Sidebar Filters */}
+        <aside className="w-64 flex-shrink-0">
+          <h2 className="font-bold text-lg mb-4">Filter</h2>
+          <FilterSection
+            title="Suppliers Types"
+            options={["Trade Assurance", "Verified Suppliers"]}
+          />
+          <FilterSection
+            title="Product Types"
+            options={["Ready to Ship", "Paid Samples"]}
           />
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            required
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-3 rounded-xl bg-gray-700 text-white placeholder-gray-300 border border-gray-600 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 outline-none transition"
-          />
+          <div className="mt-6">
+            <label className="text-sm font-bold">Min Order</label>
+            <input type="range" className="w-full accent-orange-600" />
+            <div className="flex justify-between text-xs text-gray-400 mt-1">
+              <span>10</span>
+              <span>1000</span>
+            </div>
+          </div>
+        </aside>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-xl shadow-lg transform hover:scale-105 transition-transform disabled:opacity-50"
-          >
-            {loading ? "Processing..." : isLogin ? "Login" : "Register"}
-          </button>
-        </form>
+        {/* Product Grid Area */}
+        <section className="flex-1">
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-sm">
+              1 - 16 over 7,000 results for{" "}
+              <span className="text-orange-600 font-bold">"Asus"</span>
+            </h1>
+            <select className="border rounded-lg px-3 py-1 text-sm outline-none">
+              <option>Best Match</option>
+            </select>
+          </div>
 
-        <button
-          onClick={() => {
-            setIsLogin(!isLogin);
-            setMessage(""); // Clear messages when switching
-          }}
-          className="mt-6 text-indigo-400 hover:text-indigo-300 underline text-sm w-full text-center"
-        >
-          {isLogin
-            ? "Don't have an account? Register"
-            : "Already have an account? Login"}
-        </button>
-
-        {message && (
-          <p className={`mt-4 text-center text-sm font-medium ${message.includes('✅') ? 'text-green-400' : 'text-red-400'}`}>
-            {message}
-          </p>
-        )}
-      </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {products.map((product) => (
+              <ProductCard key={product.id} {...product} />
+            ))}
+          </div>
+        </section>
+      </main>
     </div>
   );
 };
 
-export default AuthPage;
+export default Login;

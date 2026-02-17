@@ -12,9 +12,12 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.14",
     "aos": "^2.3.4",
+    "axios": "^1.13.5",
+    "context": "^3.0.33",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.4",
+    "redux": "^5.0.1",
     "tailwindcss": "^4.1.14"
   },
   "devDependencies": {
