@@ -18,6 +18,11 @@ const Login = () => {
       ? "http://localhost:5000/api/login"
       : "http://localhost:5000/api/register";
 
+       if (!validateEmail(email)) {
+      setError("Please enter a valid email");
+      return;
+    }
+
     try {
       const res = await fetch(url, {
         method: "POST",
