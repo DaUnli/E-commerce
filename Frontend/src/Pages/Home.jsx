@@ -1,11 +1,24 @@
-import React from 'react'
+import { useEffect, useState } from "react";
+import { getProducts } from "../services/productService";
 
-const Home = () => {
+function Home() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    getProducts()
+      .then((res) => setProducts(res.data))
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <div>
-      love tou
+      {products.map((product) => (
+        <div key={product._id}>
+          {product.name} - ${product.price}
+        </div>
+      ))}
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;
