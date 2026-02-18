@@ -1,43 +1,19 @@
-import React, { useEffect } from "react";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Navigate,
-} from "react-router-dom";
-import Home from "./Pages/Home";
-import Login from "./Pages/Login";
-import AOS from "aos";
-import "aos/dist/aos.css";
-import ProtectedRoute from "./Routes/ProtectedRoute";
+import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Admin from "./pages/Admin/AdminDashboard"
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Login />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/home",
-    element: (
-      <ProtectedRoute>
-        <Home />
-      </ProtectedRoute>
-    ),
-  },
+const routes = createBrowserRouter([
+  { path: "/", element: <Login /> },
+  { path: "/login", element: <Login /> },
+  { path: "/signup", element: <Register /> },
+  { path: "/home", element: <Home />},
+  { path: "/admin", element: <Admin />},
 ]);
 
-const App = () => {
-  useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      once: false,
-    });
-  }, []);
-  return <RouterProvider router={router} />;
-};
+const App = () => <RouterProvider router={routes} />;
 
 export default App;
