@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getProducts } from "../services/productService";
 
-function Home() {
+const Home = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -19,6 +19,6 @@ function Home() {
       ))}
     </div>
   );
-}
+};
 
 export default Home;
