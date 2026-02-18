@@ -8,7 +8,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 
-const Navbar = () => {
+const   Navbar = () => {
   return (
     <nav className="border-b bg-white px-4 md:px-6 py-3 sticky top-0 z-50">
       <div className="flex items-center justify-between max-w-[1400px] mx-auto gap-4 md:gap-8">

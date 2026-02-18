@@ -1,8 +1,8 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Home from "./Pages/Home";
+import Login from "./pages/Auth/Login";
+import Register from "./pages/Auth/Register";
 import Admin from "./pages/Admin/AdminDashboard"
 
 const routes = createBrowserRouter([
