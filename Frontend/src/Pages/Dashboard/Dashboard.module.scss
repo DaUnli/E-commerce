@@ -1,0 +1,20 @@
+@use '../../Styles/variables' as v;
+
+$sidebar-width: 240px;
+
+.dashboardLayout {
+  display: flex;
+  height: 100vh;
+  background-color: #f3f4f6;
+
+  .sidebar {
+    width: $sidebar-width;
+    background: v.$bg-dark; // Use the variable from your file
+    color: white;
+    
+    .logo {
+      color: v.$primary-blue; // Use the variable from your file
+    }
+  }
+  // ... rest of your dashboard styles
+}

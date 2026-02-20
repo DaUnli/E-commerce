@@ -1,0 +1,34 @@
+@use '../../Styles/variables' as v;
+
+.pageWrapper {
+  display: flex;
+  height: 100vh;
+  background-color: #eee;
+  justify-content: center;
+  align-items: center;
+
+  .formCard {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    
+    h2 {
+      color: v.$primary-blue; // Fixed name from $primary-color to $primary-blue
+      margin-bottom: 1rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: black;
+      color: white;
+      cursor: pointer;
+      
+      &:hover {
+        background: #333;
+      }
+    }
+    // ... rest of your input styles
+  }
+}
