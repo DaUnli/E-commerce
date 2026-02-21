@@ -1,20 +1,19 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LoginPage from './Pages/Login/Login';
-import Dashboard from './Pages/Dashboard/Dashboard';
+import Admin from './Pages/Admin/Admin';
+import Home from './Pages/Home/Home';
+import SignUp from './Pages/SignUp/SignUp';
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public Routes */}
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/" element={<LoginPage />} />
-        
-        {/* Private/Protected Routes */}
-        <Route path="/dashboard" element={<Dashboard />} />
-        
-        {/* Fallback (404) */}
-        <Route path="*" element={<h1>404 - Page Not Found</h1>} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="*" element={<h1>404 - Page Not Found</h1>} />f
       </Routes>
     </BrowserRouter>
   );

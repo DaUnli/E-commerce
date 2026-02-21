@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from './Dashboard.module.scss';
+import styles from './Admin.module.scss';
 
-const Dashboard: React.FC = () => {
+const Admin: React.FC = () => {
   // Mock data - in a real MERN app, this comes from your Express API
   const stats = [
     { label: 'Total Users', value: '1,250' },
@@ -52,4 +52,4 @@ const Dashboard: React.FC = () => {
   );
 };
 
-export default Dashboard;
+export default Admin;
