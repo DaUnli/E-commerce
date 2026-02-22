@@ -1,0 +1,97 @@
+@use '../../Styles/variables' as v;
+
+.container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Avatar */
+.avatar {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  background-color: v.$Background; // F9FAFB
+  border: 1px solid #E5E7EB; // Matches navbar border
+
+  font-weight: 600;
+  color: v.$Primary-Text; // 111827
+
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  overflow: hidden; // In case an image is used inside
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (min-width: 768px) {
+    width: 42px; // Slightly refined size to match header proportions
+    height: 42px;
+  }
+}
+
+/* Desktop Details */
+.userDetails {
+  display: none;
+  flex-direction: column;
+
+  @media (min-width: 640px) {
+    display: flex;
+  }
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 600;
+  color: v.$Primary-Text;
+  line-height: 1;
+}
+
+.logoutBtn {
+  font-size: 12px;
+  font-weight: 500;
+  color: v.$Secondary-Text; // Subtler logout for desktop
+  margin-top: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: #EF4444; // Only turns red on hover to keep the header clean
+    text-decoration: underline;
+  }
+}
+
+/* Mobile Logout */
+.mobileLogout {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #EF4444; // Use standard modern red
+  background-color: #FEF2F2;
+  padding: 8px 12px;
+  border-radius: v.$radius-md;
+  border: none;
+  cursor: pointer;
+
+  transition: all 0.1s ease;
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  @media (min-width: 640px) {
+    display: none;
+  }
+}

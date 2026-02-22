@@ -1,0 +1,79 @@
+@use '../../Styles/variables' as v;
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 12px 24px;
+  background-color: #FFFFFF; // Changed from Beige to White per screenshot
+  border-bottom: 1px solid #E5E7EB; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 22px; // Slightly larger for brand presence
+  font-weight: 800; // Extra bold to match the Odaplace logo
+  letter-spacing: -0.5px;
+  color: v.$Primary; // Brand Orange (#FF6B00)
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  span {
+    color: v.$Primary-Text; // Near Black (#111827)
+    margin-left: 2px;
+  }
+}
+
+/* Hide logo on small screens when searching */
+.hideOnMobile {
+  @media (max-width: 640px) {
+    display: none;
+  }
+}
+
+.searchContainer {
+  flex: 1;
+  max-width: 600px; // Expanded to match the large search bar in the image
+  margin: 0 32px;
+
+  @media (max-width: 768px) {
+    margin: 0 10px;
+  }
+}
+
+.profileSection {
+  display: flex;
+  align-items: center;
+  gap: 20px; // Spacing for icons (cart, notifications, profile)
+  flex-shrink: 0;
+  color: v.$Secondary-Text;
+
+  .iconLink {
+    cursor: pointer;
+    font-size: 20px;
+    transition: color 0.2s;
+
+    &:hover {
+      color: v.$Primary;
+    }
+  }
+
+  .userAvatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #E5E7EB;
+  }
+}

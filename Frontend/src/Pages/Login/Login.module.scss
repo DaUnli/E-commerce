@@ -3,45 +3,104 @@
 .pageWrapper {
   display: flex;
   height: 100vh;
-  background-color: #eee;
+  background-color: v.$Background; // F9FAFB
   justify-content: center;
   align-items: center;
+  padding: v.$padding-container;
 
   .formCard {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    background: white;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    gap: 15px;
+    background: #FFFFFF; // Pure white for a clean marketplace look
+    padding: v.$padding-container;
+    border-radius: v.$radius-md;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); // Lighter shadow
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid #E5E7EB; // Added subtle border
     
     h2 {
-      color: v.$primary-blue; // Fixed name from $primary-color to $primary-blue
+      color: v.$Primary-Text; // 111827
       margin-bottom: 1rem;
       text-align: center;
       font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
     }
 
-    input{
-      height: 30px;
-      padding: 20px;
-      border-radius: 10px;
+    input {
+      height: 45px;
+      padding: 0 15px;
+      border-radius: v.$radius-md;
+      border: 1.5px solid #E5E7EB; 
+      background: white;
+      font-size: 14px;
+      color: v.$Primary-Text;
+      outline: none;
+      transition: all 0.2s ease;
+
+      &:focus {
+        border-color: v.$Primary; // Orange brand color
+        box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
+      }
+
+      &::placeholder {
+        color: v.$Secondary-Text;
+        opacity: 0.6;
+      }
     }
 
     button {
       width: 100%;
-      padding: 10px;
-      background: black;
-      color: white;
+      padding: 12px;
+      background: v.$Primary; // Orange
+      color: #FFFFFF; 
       cursor: pointer;
-      border-radius: 10px;
+      border-radius: v.$radius-md;
+      border: none;
+      font-weight: 600;
+      font-size: 16px;
+      transition: background 0.2s, transform 0.1s;
 
-      
-      &:hover {
-        background: #333;
+      &:hover:not(:disabled) {
+        background: darken(#FF6B00, 5%);
+      }
+
+      &:active:not(:disabled) {
+        transform: scale(0.98);
+      }
+
+      &:disabled {
+        background: #FED7AA; // Muted orange
+        cursor: not-allowed;
+        opacity: 1; // Overriding the old 0.5 opacity for better visibility
       }
     }
-    // ... rest of your input styles
+
+    p {
+      color: #EF4444; // Error Red
+      margin-top: 10px;
+      font-size: 14px;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    span {
+      margin-top: 10px;
+      text-align: center;
+      color: v.$Secondary-Text;
+      font-size: 14px;
+
+      a {
+        color: v.$Primary; // Blue link changed to Brand Orange
+        text-decoration: none;
+        font-weight: 600;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
   }
 }
