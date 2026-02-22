@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import styles from "./Home.module.scss";
 import ProductCard from "../../components/ProductCard/ProductCard";
@@ -37,6 +37,9 @@ const Home: React.FC = () => {
     numOfReviews: 12,
     stock: 5,
   };
+
+  useEffect(() => {
+  });
 
   return (
     <div className={styles.main}>
