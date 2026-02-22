@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import styles from "./SignUp.module.scss";  
-import axios from "axios";
+import styles from "./SignUp.module.scss";
+import api from "../../api/axiosInstance";
+import { validateEmail } from "../../api/Helper";
 
 const SignUp: React.FC = () => {
   const [name, setName] = useState<string>("");
@@ -23,6 +24,10 @@ const SignUp: React.FC = () => {
       setLoading(false);
       return;
     }
+    if (!validateEmail(email)) {
+      setErrorMessage("Please enter a valid email");
+      return;
+    }
 
     if (password.length < 8) {
       setErrorMessage("Password must be at least 8 characters.");
@@ -31,20 +36,15 @@ const SignUp: React.FC = () => {
     }
 
     try {
-      // ✅ Send to backend
-      await axios.post("http://localhost:5000/api/auth/register", {
+      await api.post("/auth/register", {
         name,
         email,
         password,
       });
-
-      alert("Account created successfully!");
+      await api.get("/profile");
       navigate("/login");
-
     } catch (error: any) {
-      setErrorMessage(
-        error.response?.data?.message || "Something went wrong."
-      );
+      setErrorMessage(error.response?.data?.message || "Something went wrong.");
     } finally {
       setLoading(false);
     }
@@ -53,7 +53,9 @@ const SignUp: React.FC = () => {
   return (
     <div className={styles.pageWrapper}>
       <form className={styles.formCard} onSubmit={handleSignUp}>
-        <h2><strong>Create Account</strong></h2>
+        <h2>
+          <strong>Create Account</strong>
+        </h2>
 
         <input
           type="text"
@@ -81,14 +83,11 @@ const SignUp: React.FC = () => {
         </button>
 
         {errorMessage && (
-          <p style={{ color: "red", marginTop: "10px" }}>
-            {errorMessage}
-          </p>
+          <p style={{ color: "red", marginTop: "10px" }}>{errorMessage}</p>
         )}
 
         <p style={{ marginTop: "15px" }}>
-          Already have an account?{" "}
-          <Link to="/login">Login here</Link>
+          Already have an account? <Link to="/login">Login here</Link>
         </p>
       </form>
     </div>

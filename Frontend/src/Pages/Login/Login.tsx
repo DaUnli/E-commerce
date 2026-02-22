@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import styles from "./Login.module.scss";
 import axios from "../../api/axiosInstance";
+import { validateEmail } from "../../api/Helper";
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -20,15 +21,29 @@ const LoginPage: React.FC = () => {
       return;
     }
 
+    if (!validateEmail(email)) {
+      setErrorMessage("Please enter a valid email");
+      setLoading(false);
+      return;
+    }
+
     try {
-      // ✅ Send to backend
-      await axios.post("http://localhost:5000/api/auth/login", {
+      const response = await axios.post("/auth/login", {
         email,
         password,
       });
 
-      alert("Account created successfully!");
-      navigate("/home");
+      const user = response.data.user;
+
+      // Save role (optional)
+      localStorage.setItem("role", user.role);
+
+      // 🔥 Role-based redirect
+      if (user.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/home");
+      }
     } catch (error: any) {
       setErrorMessage(error.response?.data?.message || "Something went wrong.");
     } finally {

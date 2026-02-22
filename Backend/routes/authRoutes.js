@@ -10,7 +10,6 @@ const router = express.Router();
 router.post("/register", async (req, res) => {
   try {
     const { name, email, password, address } = req.body;
-    // ❌ removed role from req.body
 
     if (!name || !email || !password) {
       return res.status(400).json({
