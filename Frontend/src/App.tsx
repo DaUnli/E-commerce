@@ -1,20 +1,70 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LoginPage from "./Pages/Login/Login";
-import Home from "./Pages/Home/Home";
-import SignUp from "./Pages/SignUp/SignUp";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import { CartProvider } from './context/CartContext';
+import Navbar from './components/Navbar/Navbar';
+import ProtectedRoute from './components/ProtectedRoute';
 
-const App: React.FC = () => {
+// User Pages
+import Home from './pages/user/Home/Home';
+import Login from './pages/user/Login/Login';
+import Register from './pages/user/Register/Register';
+import ProductDetails from './pages/user/ProductDetails/ProductDetails';
+import Cart from './pages/user/Cart/Cart';
+import Checkout from './pages/user/Checkout/Checkout';
+import Orders from './pages/user/Orders/Orders';
+
+// Admin Pages
+import AdminDashboard from './pages/admin/AdminDashboard/AdminDashboard';
+import ProductManagement from './pages/admin/ProductManagement/ProductManagement';
+import OrderManagement from './pages/admin/OrderManagement/OrderManagement';
+
+function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/" element={<Home />} />
-        <Route path="*" element={<h1>404 - Page Not Found</h1>} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <CartProvider>
+        <Router>
+          <Navbar />
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="/cart" element={<Cart />} />
+
+            {/* Protected User Routes */}
+            <Route path="/checkout" element={
+              <ProtectedRoute>
+                <Checkout />
+              </ProtectedRoute>
+            } />
+            <Route path="/orders" element={
+              <ProtectedRoute>
+                <Orders />
+              </ProtectedRoute>
+            } />
+
+            {/* Admin Routes */}
+            <Route path="/admin" element={
+              <ProtectedRoute adminOnly>
+                <AdminDashboard />
+              </ProtectedRoute>
+            } />
+            <Route path="/admin/products" element={
+              <ProtectedRoute adminOnly>
+                <ProductManagement />
+              </ProtectedRoute>
+            } />
+            <Route path="/admin/orders" element={
+              <ProtectedRoute adminOnly>
+                <OrderManagement />
+              </ProtectedRoute>
+            } />
+          </Routes>
+        </Router>
+      </CartProvider>
+    </AuthProvider>
   );
-};
+}
 
 export default App;

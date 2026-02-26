@@ -1,75 +1,44 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import styles from "./Navbar.module.scss";
-import api from "../../api/axiosInstance";
-import ProfileInfo from "../Card/Profile";
-import Searchbar from "../SearchBar/SearchBar";
+import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
+import { CartContext } from '../../context/CartContext';
+import styles from './Navbar.module.scss';
 
-interface NavbarProps {
-  userInfo: any; // Replace with proper User type if available
-  onSearchNote: (query: string) => void;
-  handleClearSearch: () => void;
-}
+const Navbar = () => {
+  const { user, logout } = useContext(AuthContext);
+  const { cart } = useContext(CartContext);
 
-const Navbar: React.FC<NavbarProps> = ({
-  userInfo,
-  onSearchNote,
-  handleClearSearch,
-}) => {
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const navigate = useNavigate();
-
-  const onLogout = async (): Promise<void> => {
-    try {
-      await api.post("/auth/logout");
-    } catch (error) {
-      console.error("Logout failed", error);
-    } finally {
-      navigate("/login");
-    }
-  };
-
-  const handleSearch = (): void => {
-    if (searchQuery.trim()) {
-      onSearchNote(searchQuery);
-    }
-  };
-
-  const onClearSearch = (): void => {
-    setSearchQuery("");
-    handleClearSearch();
-  };
+  const cartCount = cart?.products.reduce((acc, item) => acc + item.quantity, 0) || 0;
 
   return (
-    <div className={styles.navbar}>
-      {/* Logo */}
-      <h2
-        className={`${styles.logo} ${
-          searchQuery ? styles.hideOnMobile : ""
-        }`}
-      >
-        ThinTheHan<span>Nimo</span>
-      </h2>
-
-      {/* Searchbar */}
-      {userInfo && (
-        <div className={styles.searchContainer}>
-          <Searchbar
-            value={searchQuery}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setSearchQuery(e.target.value)
-            }
-            handleSearch={handleSearch}
-            onClearSearch={onClearSearch}
-          />
-        </div>
-      )}
-
-      {/* Profile Section */}
-      <div className={styles.profileSection}>
-        <ProfileInfo userInfo={userInfo} onLogout={onLogout} />
+    <nav className={styles.navbar}>
+      <div className={styles.logo}>
+        <Link to="/">ShopLogo</Link>
       </div>
-    </div>
+      
+      <div className={styles.search}>
+        <input type="text" placeholder="Search products..." />
+      </div>
+
+      <div className={styles.links}>
+        <Link to="/cart">
+          Cart <span className={styles.cartBadge}>{cartCount}</span>
+        </Link>
+        
+        {user ? (
+          <>
+            <Link to="/orders">My Orders</Link>
+            {user.role === 'admin' && <Link to="/admin">Admin</Link>}
+            <button onClick={logout}>Logout</button>
+          </>
+        ) : (
+          <>
+            <Link to="/login">Login</Link>
+            <Link to="/register">Register</Link>
+          </>
+        )}
+      </div>
+    </nav>
   );
 };
 

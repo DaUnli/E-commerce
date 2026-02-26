@@ -1,0 +1,203 @@
+@import '../../../styles/variables';
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: $padding-container;
+
+  h1 {
+    font-size: 1.75rem;
+    margin-bottom: 2rem;
+    color: $Primary-Text;
+  }
+
+  .ordersList {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    .orderCard {
+      background: $white;
+      border: 1px solid $border-color;
+      border-radius: $radius-md;
+      overflow: hidden;
+
+      .orderHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.25rem 1.5rem;
+        background: $Background;
+        border-bottom: 1px solid $border-color;
+
+        .orderInfo {
+          display: flex;
+          gap: 2rem;
+
+          .infoItem {
+            label {
+              font-size: 0.75rem;
+              color: $Secondary-Text;
+              text-transform: uppercase;
+              display: block;
+              margin-bottom: 0.25rem;
+            }
+
+            span {
+              font-weight: 600;
+              color: $Primary-Text;
+            }
+          }
+        }
+
+        .status {
+          padding: 0.375rem 0.75rem;
+          border-radius: 999px;
+          font-size: 0.75rem;
+          font-weight: 600;
+          text-transform: uppercase;
+
+          &.pending { background: #fef3c7; color: #92400e; }
+          &.processing { background: #dbeafe; color: #1e40af; }
+          &.shipped { background: #e0e7ff; color: #3730a3; }
+          &.delivered { background: #d1fae5; color: #065f46; }
+          &.cancelled { background: #fee2e2; color: #991b1b; }
+        }
+      }
+
+      .orderItems {
+        padding: 1.5rem;
+
+        .item {
+          display: flex;
+          gap: 1rem;
+          padding-bottom: 1rem;
+          margin-bottom: 1rem;
+          border-bottom: 1px solid $border-color;
+
+          &:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+          }
+
+          .image {
+            width: 70px;
+            height: 70px;
+            border-radius: 4px;
+            overflow: hidden;
+
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+          }
+
+          .details {
+            flex: 1;
+
+            h4 {
+              font-size: 0.95rem;
+              color: $Primary-Text;
+              margin-bottom: 0.25rem;
+            }
+
+            .qty {
+              font-size: 0.875rem;
+              color: $Secondary-Text;
+            }
+          }
+
+          .price {
+            font-weight: 600;
+            color: $Primary-Text;
+          }
+        }
+      }
+
+      .orderFooter {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        border-top: 1px solid $border-color;
+
+        .total {
+          font-size: 1.1rem;
+          font-weight: 700;
+          color: $Primary-Text;
+
+          span {
+            font-weight: 400;
+            font-size: 0.875rem;
+            color: $Secondary-Text;
+            margin-right: 0.5rem;
+          }
+        }
+
+        .actions {
+          display: flex;
+          gap: 0.75rem;
+
+          button {
+            padding: 0.5rem 1rem;
+            border-radius: $radius-md;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+          }
+
+          .cancelBtn {
+            background: $white;
+            border: 1px solid $border-color;
+            color: $danger;
+
+            &:hover {
+              border-color: $danger;
+              background: #fef2f2;
+            }
+
+            &:disabled {
+              opacity: 0.5;
+              cursor: not-allowed;
+            }
+          }
+
+          .trackBtn {
+            background: $Primary;
+            border: none;
+            color: $white;
+
+            &:hover {
+              background: darken($Primary, 10%);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .empty {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: $white;
+    border-radius: $radius-md;
+    border: 1px solid $border-color;
+
+    h2 {
+      color: $Secondary-Text;
+      margin-bottom: 1rem;
+    }
+
+    a {
+      display: inline-block;
+      padding: 0.75rem 2rem;
+      background: $Primary;
+      color: $white;
+      border-radius: $radius-md;
+      font-weight: 600;
+    }
+  }
+}
