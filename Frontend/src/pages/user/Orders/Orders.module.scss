@@ -171,7 +171,7 @@
             color: $white;
 
             &:hover {
-              background: darken($Primary, 10%);
+              background: rgba($Primary, 0.9);
             }
           }
         }
