@@ -28,6 +28,7 @@
       border-radius: $radius-md;
       color: $Secondary-Text;
       transition: all 0.2s;
+      cursor: pointer;
 
       &:hover, &.active {
         background: $Primary;
@@ -37,9 +38,38 @@
     }
   }
 
-  .productGrid {
+  .mainContent {
     flex: 1;
+
+    .searchHeader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding: 0.5rem 0;
+
+      h2 {
+        font-size: 1.25rem;
+        color: $Primary-Text;
+        font-weight: 600;
+      }
+
+      .clearSearch {
+        color: $Primary;
+        text-decoration: none;
+        font-size: 0.875rem;
+        font-weight: 500;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .productGrid {
     display: grid;
+    // This creates the columns (min 240px each)
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 1.5rem;
 
@@ -48,11 +78,13 @@
       border: 1px solid $border-color;
       border-radius: $radius-md;
       padding: 1rem;
+      display: flex;
+      flex-direction: column; // Stack elements inside the card vertically
       transition: transform 0.2s, box-shadow 0.2s;
 
       &:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
       }
 
       .image {
@@ -71,10 +103,13 @@
       }
 
       .info {
+        flex: 1; // Pushes actions to the bottom so all cards match height
+        
         h3 {
           font-size: 1rem;
           color: $Primary-Text;
           margin-bottom: 0.5rem;
+          // Truncate long names
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -83,6 +118,8 @@
         .category {
           font-size: 0.75rem;
           color: $Secondary-Text;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
           margin-bottom: 0.5rem;
         }
 
@@ -96,14 +133,18 @@
       .actions {
         display: flex;
         gap: 0.5rem;
-        margin-top: 1rem;
+        margin-top: 1.25rem;
 
-        button {
+        button, .viewBtn {
           flex: 1;
           padding: 0.625rem;
           border-radius: $radius-md;
           font-weight: 600;
-          transition: all 0.2s;
+          font-size: 0.875rem;
+          text-align: center;
+          text-decoration: none;
+          cursor: pointer;
+          transition: 0.2s;
         }
 
         .addBtn {
@@ -129,22 +170,37 @@
       }
     }
   }
+
+  .noResults {
+    text-align: center;
+    padding: 4rem 0;
+    color: $Secondary-Text;
+    font-size: 1.1rem;
+  }
 }
 
+// Mobile Adjustments
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
+    padding: 1rem;
+
     .sidebar {
       width: 100%;
       display: flex;
       overflow-x: auto;
       gap: 0.5rem;
-      padding-bottom: 1rem;
+      padding-bottom: 0.5rem;
       
       button {
         width: auto;
         white-space: nowrap;
       }
+    }
+
+    .productGrid {
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); // Smaller columns on mobile
+      gap: 1rem;
     }
   }
 }

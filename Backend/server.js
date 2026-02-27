@@ -10,6 +10,7 @@ import cartRoutes from "./routes/cartRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
 import allUser from "./routes/usersRoutes.js"
+import productSearchRoute from "./routes/productSearch.js"
 
 
 dotenv.config();
@@ -35,6 +36,7 @@ app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/users", allUser);
+app.use("/api/search", productSearchRoute);
 
 
 app.get("/", (req, res) => {

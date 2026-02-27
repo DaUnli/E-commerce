@@ -5,29 +5,6 @@ import { adminOnly } from "../middleware/adminMiddleware.js";
 
 const router = express.Router();
 
-
-// =====================================================
-// GET /api/products
-// Fetch all products (PUBLIC)
-// =====================================================
-router.get("/", async (req, res) => {
-  try {
-    const products = await Product.find().sort({ createdAt: -1 });
-
-    res.status(200).json({
-      success: true,
-      count: products.length,
-      products,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Failed to fetch products",
-    });
-  }
-});
-
-
 // =====================================================
 // GET /api/products/:id
 // Fetch single product (PUBLIC)
@@ -47,7 +24,6 @@ router.get("/:id", async (req, res) => {
       success: true,
       product,
     });
-
   } catch (error) {
     res.status(400).json({
       success: false,
@@ -55,7 +31,6 @@ router.get("/:id", async (req, res) => {
     });
   }
 });
-
 
 // =====================================================
 // POST /api/products
@@ -70,7 +45,6 @@ router.post("/", protect, adminOnly, async (req, res) => {
       message: "Product created successfully",
       product,
     });
-
   } catch (error) {
     res.status(400).json({
       success: false,
@@ -78,7 +52,6 @@ router.post("/", protect, adminOnly, async (req, res) => {
     });
   }
 });
-
 
 // =====================================================
 // PUT /api/products/:id
@@ -95,21 +68,16 @@ router.put("/:id", protect, adminOnly, async (req, res) => {
       });
     }
 
-    product = await Product.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
+    product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
 
     res.status(200).json({
       success: true,
       message: "Product updated successfully",
       product,
     });
-
   } catch (error) {
     res.status(400).json({
       success: false,
@@ -117,7 +85,6 @@ router.put("/:id", protect, adminOnly, async (req, res) => {
     });
   }
 });
-
 
 // =====================================================
 // DELETE /api/products/:id
@@ -140,7 +107,6 @@ router.delete("/:id", protect, adminOnly, async (req, res) => {
       success: true,
       message: "Product deleted successfully",
     });
-
   } catch (error) {
     res.status(400).json({
       success: false,

@@ -1,7 +1,9 @@
 import api from './axios';
 
 export const productApi = {
-  getAll: () => api.get('/products'),
+  // Search products by query
+  
+
   getById: (id: string) => api.get(`/products/${id}`),
   
   // Admin

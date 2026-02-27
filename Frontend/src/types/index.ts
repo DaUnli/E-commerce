@@ -2,7 +2,12 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  role: 'user' | 'admin';
+  role: "user" | "admin";
+}
+
+export interface ProductImage {
+  public_id: string;
+  url: string;
 }
 
 export interface Product {
@@ -11,7 +16,8 @@ export interface Product {
   description?: string;
   price: number;
   category?: string;
-  images: string[];
+  images?: ProductImage[];
+  url: string;
   createdAt?: string;
 }
 
@@ -40,7 +46,7 @@ export interface Order {
   products: OrderProduct[];
   totalPrice: number;
   shippingAddress: string;
-  orderStatus: 'Pending' | 'Processing' | 'Shipped' | 'Delivered' | 'Cancelled';
-  paymentStatus: 'Pending' | 'Paid';
+  orderStatus: "Pending" | "Processing" | "Shipped" | "Delivered" | "Cancelled";
+  paymentStatus: "Pending" | "Paid";
   createdAt: string;
 }

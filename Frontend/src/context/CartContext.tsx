@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useContext } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import type { ReactNode } from "react";
 import { cartApi } from "../api/cartApi";
 import type { Cart } from "../types/index";
@@ -33,6 +33,9 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({
       setLoading(false);
     }
   };
+  useEffect(() => {
+    fetchCart();
+  }, [fetchCart]);
 
   const addToCart = async (productId: string, quantity: number) => {
     try {

@@ -74,7 +74,7 @@
         transition: background 0.2s;
 
         &:hover {
-          background: darken($Primary, 10%);
+         background: rgba($Primary, 0.9);
         }
       }
     }
@@ -276,7 +276,7 @@
             border: none;
 
             &:hover {
-              background: darken($Primary, 10%);
+              background: rgba($Primary, 0.9);
             }
           }
 

@@ -69,6 +69,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     try {
       await authApi.logout();
       setUser(null);
+      window.location.reload();
     } catch (error) {
       console.error("Logout error", error);
     }
