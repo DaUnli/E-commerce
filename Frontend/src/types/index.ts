@@ -13,12 +13,12 @@ export interface ProductImage {
 export interface Product {
   _id: string;
   name: string;
-  description?: string;
   price: number;
-  category?: string;
-  images?: ProductImage[];
-  url: string;
-  createdAt?: string;
+  category: string;
+  images: ProductImage[];
+  ratings: number;
+  numOfReviews: number;
+  stock: number;
 }
 
 export interface CartProduct {

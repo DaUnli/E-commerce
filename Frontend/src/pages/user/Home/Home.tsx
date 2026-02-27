@@ -1,30 +1,37 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { CartContext } from "../../../context/CartContext";
-import type { Product } from "../../../types/index";
+import type { Product } from "../../../types";
 import styles from "./Home.module.scss";
-import { formatPrice } from "../../../types/Helper";
-import { searchApi } from "../../../api/searchApi";
+import { productApi } from "../../../api/productApi";
+import ProductCard from "../../../components/ProductCard/ProductCard";
+import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 
 const Home = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [category, setCategory] = useState("All");
   const [loading, setLoading] = useState(true);
-  const { addToCart } = useContext(CartContext);
   const [searchParams] = useSearchParams();
 
-  // Updated: use "query" param instead of "name"
   const searchQuery = searchParams.get("query") || "";
 
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        // Call the new search API
-        const res = await searchApi.search(searchQuery);
-        setProducts(res.data.products);
-      } catch (error) {
-        console.error("Error fetching products", error);
+        const res = await productApi.getAll();
+        if (res.data.success) {
+          let data = res.data.products;
+
+          if (searchQuery) {
+            data = data.filter((p) =>
+              p.name.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+          }
+
+          setProducts(data);
+        }
+      } catch (err) {
+        console.error("Error fetching products:", err);
       } finally {
         setLoading(false);
       }
@@ -42,6 +49,7 @@ const Home = () => {
 
   return (
     <div className={styles.container}>
+      {/* Sidebar */}
       <div className={styles.sidebar}>
         <h3>Categories</h3>
         {categories.map((cat) => (
@@ -55,6 +63,7 @@ const Home = () => {
         ))}
       </div>
 
+      {/* Main Content */}
       <div className={styles.mainContent}>
         {searchQuery && (
           <div className={styles.searchHeader}>
@@ -66,41 +75,12 @@ const Home = () => {
         )}
 
         {loading ? (
-          <p>Loading products...</p>
+          <LoadingSpinner />
         ) : (
           <div className={styles.productGrid}>
             {filtered.length > 0 ? (
               filtered.map((product) => (
-                <div key={product._id} className={styles.productCard}>
-                  <div className={styles.image}>
-                    <img
-                      src={
-                        product.images?.[0]?.url ||
-                        "https://via.placeholder.com/200"
-                      }
-                      alt={product.name}
-                    />
-                  </div>
-                  <div className={styles.info}>
-                    <h3>{product.name}</h3>
-                    <p className={styles.category}>{product.category}</p>
-                    <p className={styles.price}>{formatPrice(product.price)}</p>
-                  </div>
-                  <div className={styles.actions}>
-                    <button
-                      className={styles.addBtn}
-                      onClick={() => addToCart(product._id, 1)}
-                    >
-                      Add to Cart
-                    </button>
-                    <Link
-                      to={`/product/${product._id}`}
-                      className={styles.viewBtn}
-                    >
-                      View
-                    </Link>
-                  </div>
-                </div>
+                <ProductCard key={product._id} product={product} />
               ))
             ) : (
               <p className={styles.noResults}>

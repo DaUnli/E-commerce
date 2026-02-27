@@ -1,4 +1,4 @@
-@import '../../../styles/variables';
+@use '../../../styles/variables' as *;
 
 .container {
   min-height: calc(100vh - 70px);
@@ -78,7 +78,7 @@
         transition: background 0.2s;
 
         &:hover {
-          background: darken($Primary, 10%);
+          background: rgba($Primary, 0.9);
         }
 
         &:disabled {

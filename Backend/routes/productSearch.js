@@ -1,26 +1,26 @@
 import express from "express";
-import Product from "../models/Product.js"; // adjust path if needed
+import Product from "../models/Product.js";
 
 const router = express.Router();
 
 // GET /api/products/search?query=...
-router.get("/", async (req, res) => {
+router.get("/search", async (req, res) => {
   try {
-    const query = req.query.query ? String(req.query.query).trim() : "";
+    const query = req.query.query?.toString().trim();
 
-    // Build search condition
-    let searchCondition = {};
-    if (query.length > 0) {
-      searchCondition = {
-        $or: [
-          { name: { $regex: query, $options: "i" } },
-          { category: { $regex: query, $options: "i" } },
-          { description: { $regex: query, $options: "i" } },
-        ],
-      };
-    }
+    const searchCondition = query
+      ? {
+          $or: [
+            { name: { $regex: query, $options: "i" } },
+            { category: { $regex: query, $options: "i" } },
+            { description: { $regex: query, $options: "i" } },
+          ],
+        }
+      : {};
 
-    const products = await Product.find(searchCondition).sort({ createdAt: -1 });
+    const products = await Product.find(searchCondition)
+      .sort({ createdAt: -1 })
+      .lean();
 
     res.status(200).json({
       success: true,
@@ -28,7 +28,7 @@ router.get("/", async (req, res) => {
       products,
     });
   } catch (error) {
-    console.error("Product search error:", error);
+    console.error("Search error:", error);
     res.status(500).json({
       success: false,
       message: "Failed to search products",

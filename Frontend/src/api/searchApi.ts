@@ -3,8 +3,9 @@ import api from "./axios";
 export const searchApi = {
   search: (query?: string) => {
     const url = query
-      ? `/search?query=${encodeURIComponent(query)}`
-      : "/search";
+      ? `/products/search?query=${encodeURIComponent(query)}`
+      : "/products/search";
+
     return api.get(url);
   },
 };
