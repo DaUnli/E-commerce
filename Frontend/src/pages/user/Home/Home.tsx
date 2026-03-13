@@ -8,11 +8,15 @@ import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 
 const Home = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [category, setCategory] = useState("All");
   const [loading, setLoading] = useState(true);
   const [searchParams] = useSearchParams();
 
   const searchQuery = searchParams.get("query") || "";
+
+  const filtered =
+    category === "All"
+      ? products
+      : products.filter((p) => p.category === category);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -40,29 +44,10 @@ const Home = () => {
     fetchProducts();
   }, [searchQuery]);
 
-  const categories = ["All", "Electronics", "Clothing", "Books", "Home"];
 
-  const filtered =
-    category === "All"
-      ? products
-      : products.filter((p) => p.category === category);
 
   return (
     <div className={styles.container}>
-      {/* Sidebar */}
-      <div className={styles.sidebar}>
-        <h3>Categories</h3>
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            className={category === cat ? styles.active : ""}
-            onClick={() => setCategory(cat)}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
-
       {/* Main Content */}
       <div className={styles.mainContent}>
         {searchQuery && (
