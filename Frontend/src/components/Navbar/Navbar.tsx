@@ -1,8 +1,8 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { useContext, useState } from 'react';
-import { AuthContext } from '../../context/AuthContext';
-import { CartContext } from '../../context/CartContext';
-import styles from './Navbar.module.scss';
+import { Link, useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { CartContext } from "../../context/CartContext";
+import styles from "./Navbar.module.scss";
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
@@ -10,14 +10,15 @@ const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
-  const cartCount = cart?.products?.reduce((acc, item) => acc + item.quantity, 0) || 0;
+  const cartCount =
+    cart?.products?.reduce((acc, item) => acc + item.quantity, 0) || 0;
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
 
     // If searchTerm is empty, go to all products page
     if (!searchTerm.trim()) {
-      navigate('/products'); // or '/' if your homepage lists all products
+      navigate("/products"); // or '/' if your homepage lists all products
       return;
     }
 
@@ -30,15 +31,17 @@ const Navbar = () => {
       <div className={styles.logo}>
         <Link to="/">ShopLogo</Link>
       </div>
-      
+
       <form className={styles.search} onSubmit={handleSearch}>
-        <input 
-          type="text" 
-          placeholder="Search products..." 
+        <input
+          type="text"
+          placeholder="Search products..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button type="submit" style={{ display: 'none' }}>Search</button>
+        <button type="submit" style={{ display: "none" }}>
+          Search
+        </button>
       </form>
 
       <div className={styles.links}>
@@ -47,12 +50,14 @@ const Navbar = () => {
             Cart <span className={styles.cartBadge}>{cartCount}</span>
           </Link>
         )}
-        
+
         {user ? (
           <>
             <Link to="/orders">My Orders</Link>
-            {user.role === 'admin' && <Link to="/admin">Admin</Link>}
-            <button className={styles.logoutBtn} onClick={logout}>Logout</button>
+            {user.role === "admin" && <Link to="/admin">Admin</Link>}
+            <button className={styles.logoutBtn} onClick={logout}>
+              Logout
+            </button>
           </>
         ) : (
           <>
