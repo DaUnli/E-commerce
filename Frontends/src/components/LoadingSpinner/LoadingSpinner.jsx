@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./";
+import styles from "./LoadingSpinner.module.scss";
 
 const LoadingSpinner = ({ size = "medium", fullScreen = false }) => {
   return (

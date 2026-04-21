@@ -1,6 +1,5 @@
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../../context/AuthContext";
 import styles from "./Login.module.scss";
 
 const Login = () => {
@@ -12,7 +11,7 @@ const Login = () => {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setLoading(true);

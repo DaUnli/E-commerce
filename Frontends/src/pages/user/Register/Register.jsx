@@ -1,6 +1,5 @@
 import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../../context/AuthContext';
 import styles from './Register.module.scss';
 
 const Register = () => {
@@ -16,13 +15,13 @@ const Register = () => {
   const { register } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
     
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);

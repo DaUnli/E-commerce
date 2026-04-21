@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { orderApi } from '../../../api/orderApi';
-import type { Order } from '../../../types/index';
 import styles from './AdminDashboard.module.scss';
 
 const AdminDashboard = () => {
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [orders, setOrders] = useState([]);
   const [stats, setStats] = useState({
     totalOrders: 0,
     pendingOrders: 0,
@@ -20,15 +19,15 @@ const AdminDashboard = () => {
         const allOrders = res.data.orders;
         setOrders(allOrders);
 
-        const totalRevenue = allOrders.reduce((sum: number, order: Order) => 
+        const totalRevenue = allOrders.reduce((sum, order) => 
           order.paymentStatus === 'Paid' ? sum + order.totalPrice : sum, 0
         );
 
         setStats({
           totalOrders: allOrders.length,
-          pendingOrders: allOrders.filter((o: Order) => o.orderStatus === 'Pending').length,
+          pendingOrders: allOrders.filter((o) => o.orderStatus === 'Pending').length,
           totalRevenue,
-          cancelledOrders: allOrders.filter((o: Order) => o.orderStatus === 'Cancelled').length
+          cancelledOrders: allOrders.filter((o) => o.orderStatus === 'Cancelled').length
         });
       } catch (error) {
         console.error('Error fetching orders', error);
@@ -37,7 +36,7 @@ const AdminDashboard = () => {
     fetchOrders();
   }, []);
 
-  const getStatusClass = (status: string) => {
+  const getStatusClass = (status) => {
     switch (status.toLowerCase()) {
       case 'pending': return '#92400e';
       case 'processing': return '#1e40af';

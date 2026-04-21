@@ -2,12 +2,6 @@ import { useState } from "react";
 import styles from "./SideBar.module.scss";
 
 const Sidebar = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [category, setCategory] = useState("All");
-
-  
-  const categories = ["All", "Electronics", "Clothing", "Books", "Home"];
-
   return (
     <div className={styles.container}>
       {/* Sidebar */}

@@ -1,9 +1,9 @@
-export const validateEmail = (email: string): boolean =>
+export const validateEmail = (email) =>
   /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
 export const strongPassword = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/;
 
-export const getInitials = (name: string) => {
+export const getInitials = (name) => {
   if (!name) return "";
 
   const words = name.trim().split(" ");
@@ -16,7 +16,7 @@ export const getInitials = (name: string) => {
   return initials.toUpperCase();
 };
 
-export const formatPrice = (amount: number) => {
+export const formatPrice = (amount) => {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",

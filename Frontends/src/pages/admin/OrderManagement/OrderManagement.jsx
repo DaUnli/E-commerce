@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { orderApi } from "../../../api/orderApi";
-import type { Order } from "../../../types/index";
-import styles from "./OrderManagement.module.scss";
+
 
 const OrderManagement = () => {
-  const [orders, setOrders] = useState<Order[]>([]);
-  const [cancelledOrders, setCancelledOrders] = useState<Order[]>([]);
+  const [orders, setOrders] = useState([]);
+  const [cancelledOrders, setCancelledOrders] = useState([]);
   const [activeTab, setActiveTab] = useState<"all" | "cancelled">("all");
   const [loading, setLoading] = useState(true);
 
@@ -29,13 +28,13 @@ const OrderManagement = () => {
     }
   };
 
-  const handleStatusChange = async (orderId: string, newStatus: string) => {
+  const handleStatusChange = async (orderId, newStatus) => {
     try {
       await orderApi.updateOrderStatus(orderId, newStatus);
       setOrders(
         orders.map((order) =>
           order._id === orderId
-            ? { ...order, orderStatus: newStatus as Order["orderStatus"] }
+            ? { ...order, orderStatus: newStatus }
             : order,
         ),
       );
@@ -45,7 +44,7 @@ const OrderManagement = () => {
     }
   };
 
-  const getStatusColor = (status: string) => {
+  const getStatusColor = (status) => {
     switch (status.toLowerCase()) {
       case "pending":
         return "#fef3c7";
@@ -62,7 +61,7 @@ const OrderManagement = () => {
     }
   };
 
-  const getStatusTextColor = (status: string) => {
+  const getStatusTextColor = (status) => {
     switch (status.toLowerCase()) {
       case "pending":
         return "#92400e";

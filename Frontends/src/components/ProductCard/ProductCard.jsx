@@ -1,14 +1,11 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import type { Product } from "../../types";
 import { CartContext } from "../../context/CartContext";
 import styles from "./ProductCard.module.scss";
 
-interface ProductProps {
-  product: Product;
-}
 
-const ProductCard: React.FC<ProductProps> = ({ product }) => {
+
+const ProductCard = ({ product }) => {
   const { addToCart } = useContext(CartContext);
 
   return (

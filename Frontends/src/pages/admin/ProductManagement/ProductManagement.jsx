@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { productApi } from '../../../api/productApi';
-import type { Product } from '../../../types/index';
 import styles from './ProductManagement.module.scss';
 
 const ProductManagement = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [formData, setFormData] = useState({
@@ -30,7 +29,7 @@ const ProductManagement = () => {
     }
   };
 
-  const handleOpenModal = (product?: Product) => {
+  const handleOpenModal = (product) => {
     if (product) {
       setEditingProduct(product);
       setFormData({
@@ -52,7 +51,7 @@ const ProductManagement = () => {
     setEditingProduct(null);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
@@ -81,7 +80,7 @@ const ProductManagement = () => {
     }
   };
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this product?')) return;
 
     try {

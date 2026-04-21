@@ -1,7 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
-import { AuthContext } from "../../context/AuthContext";
-import { CartContext } from "../../context/CartContext";
 import styles from "./Navbar.module.scss";
 
 const Navbar = () => {
@@ -13,7 +11,7 @@ const Navbar = () => {
   const cartCount =
     cart?.products?.reduce((acc, item) => acc + item.quantity, 0) || 0;
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = (e) => {
     e.preventDefault();
 
     // If searchTerm is empty, go to all products page
