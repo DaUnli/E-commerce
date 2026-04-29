@@ -12,7 +12,6 @@ const Register = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   
-  const { register } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -23,22 +22,8 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    setLoading(true);
 
-    const success = await register(
-      formData.name,
-      formData.email,
-      formData.password,
-      formData.address
-    );
     
-    if (success) {
-      navigate('/');
-    } else {
-      setError('Registration failed. Please try again.');
-    }
-    setLoading(false);
   };
 
   return (

@@ -8,22 +8,16 @@ const Login = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setLoading(true);
 
-    const success = await login(email, password);
-
-    if (success) {
-      navigate("/");
+    if (email == "Jamess@hemom.com" && password == "12345678") {
+      navigate('/home')
     } else {
-      setError("Invalid email or password");
+      console.error(error.message)
     }
-    setLoading(false);
   };
 
   return (

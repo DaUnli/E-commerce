@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: center;
   padding: $padding-container;
-  background: $Background;
+  background: $background;
 
   .card {
     background: $white;
@@ -14,18 +14,18 @@
     border-radius: $radius-md;
     border: 1px solid $border-color;
     width: 100%;
-    max-width: 450px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    max-width: 400px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
 
     h2 {
       text-align: center;
-      color: $Primary-Text;
+      color: $primary-text;
       margin-bottom: 0.5rem;
     }
 
     .subtitle {
       text-align: center;
-      color: $Secondary-Text;
+      color: $secondary-text;
       margin-bottom: 2rem;
       font-size: 0.875rem;
     }
@@ -33,13 +33,7 @@
     .form {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
-
-      .row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-      }
+      gap: 1.25rem;
 
       .field {
         display: flex;
@@ -49,25 +43,21 @@
         label {
           font-size: 0.875rem;
           font-weight: 500;
-          color: $Primary-Text;
+          color: $primary-text;
         }
 
-        input, textarea {
+        input {
           padding: 0.75rem 1rem;
           border: 1px solid $border-color;
           border-radius: $radius-md;
           font-size: 1rem;
           outline: none;
-          font-family: inherit;
+          transition: all 0.2s ease;
 
           &:focus {
-            border-color: $Primary;
+            border-color: $primary;
+            box-shadow: 0 0 0 3px rgba(0, 128, 97, 0.15);
           }
-        }
-
-        textarea {
-          resize: vertical;
-          min-height: 80px;
         }
       }
 
@@ -79,17 +69,18 @@
 
       .submitBtn {
         padding: 0.875rem;
-        background: $Primary;
+        background: $primary;
         color: $white;
         border: none;
         border-radius: $radius-md;
         font-size: 1rem;
         font-weight: 600;
         margin-top: 0.5rem;
-        transition: background 0.2s;
+        transition: all 0.2s ease;
+        cursor: pointer;
 
         &:hover {
-          background: $Primary;
+          background: $primary;
         }
 
         &:disabled {
@@ -102,14 +93,14 @@
     .footer {
       text-align: center;
       margin-top: 1.5rem;
-      color: $Secondary-Text;
+      color: $secondary-text;
       font-size: 0.875rem;
 
       a {
-        color: $Primary;
+        color: $primary;
         font-weight: 600;
         margin-left: 0.25rem;
-        
+
         &:hover {
           text-decoration: underline;
         }
