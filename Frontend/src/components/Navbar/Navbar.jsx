@@ -1,32 +1,59 @@
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import Searchbar from "../Searchbar/Searchbar";
+import ProfileInfo from "../Profile/Profile";
 import styles from "./Navbar.module.scss";
+import Cart from "../Cart/Cart";
+import Location from "../Location/Location";
 
 const Navbar = () => {
-  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [userInfo, setUserInfo] = useState({
+    fullName: "Cathleah Grace",
+  });
+  const [locationbar, setLocationbar] = useState("Gensan");
+  
+  // Example cart count - this would usually come from a Context or Redux
+  const [cartCount, setCartCount] = useState(8);
 
-  const handleSearch = (e) => {
-    e.preventDefault();
+  const onLogout = () => {
+    setUserInfo(null);
+    navigate("/login");
+  };
+
+  const handleSearch = () => {
+    if (searchTerm) {
+      // navigate(`/search?query=${searchTerm}`);
+    }
   };
 
   return (
     <nav className={styles.navbar}>
       <div className={styles.logo}>
-        <img src="/logo.png" alt="Company Logo" className="logo-style" />
+        <Link to="/">
+          <img src="/logo.png" alt="Logo" className={styles.logoImage} />
+        </Link>
       </div>
 
-      <form className={styles.search} onSubmit={handleSearch}>
-        <input
-          type="text"
-          placeholder="Search products..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+      <div className={styles.location}>
+        <Location locationbar={locationbar}/>
+      </div>
+
+      <div className={styles.searchSection}>
+        <Searchbar 
+          value={searchTerm} 
+          onChange={({ target }) => setSearchTerm(target.value)}
+          handleSearch={handleSearch}
         />
-        <button type="submit" style={{ display: "none" }}>
-          Search
-        </button>
-      </form>
+      </div>
+
+      {/* Cart Icon Section */}
+      <Cart cartCount={cartCount}/>
+
+      <div className={styles.profileSection}>
+        <ProfileInfo userInfo={userInfo} onLogout={onLogout} />
+      </div>
     </nav>
   );
 };

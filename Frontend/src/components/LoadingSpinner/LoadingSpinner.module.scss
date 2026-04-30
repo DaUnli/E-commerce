@@ -2,42 +2,44 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.fullScreen {
-  height: 100vh;
+  
+  &.fullScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.8); // Slight overlay
+    backdrop-filter: blur(4px); // Blurs the background
+    z-index: 9999;
+  }
 }
 
 .spinner {
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #3498db;
+  position: relative;
   border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: #008061; // Main color
   animation: spin 1s linear infinite;
+
+  // The "Interesting" Part: An inner ring spinning the opposite way
+  &::after {
+    content: "";
+    position: absolute;
+    top: 5px; left: 5px; right: 5px; bottom: 5px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #dc3545; // Secondary color
+    animation: spin 1.5s linear infinite reverse;
+  }
+
+  // Sizes
+  &.small { width: 24px; height: 24px; }
+  &.medium { width: 48px; height: 48px; }
+  &.large { width: 80px; height: 80px; }
 }
 
-/* Sizes */
-.small {
-  width: 20px;
-  height: 20px;
-}
-
-.medium {
-  width: 40px;
-  height: 40px;
-}
-
-.large {
-  width: 70px;
-  height: 70px;
-}
-
-/* Animation */
 @keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }

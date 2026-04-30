@@ -1,72 +1,35 @@
-@use "../../styles/variables" as *;
-
 .navbar {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 1rem $padding-container;
-  background: $white;
-  border-bottom: 1px solid $border-color;
+  justify-content: space-between;
+  padding: 0.75rem 2rem;
+  background-color: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   position: sticky;
   top: 0;
   z-index: 100;
 
-  .logo img{
-    width: 100px;
-    height: 30px;
+  .logo {
+    flex: 0 0 auto;
+
+    .logoImage {
+      height: 40px;
+      width: auto;
+      display: block;
+    }
   }
 
-  .search {
+  .searchSection {
     flex: 1;
-    max-width: 400px;
+    max-width: 600px;
     margin: 0 2rem;
 
-    input {
-      width: 100%;
-      padding: 0.625rem 1rem;
-      border: 1px solid $border-color;
-      border-radius: $radius-md;
-      outline: none;
-      &:focus {
-        border-color: $primary;
-      }
+    @media (max-width: 640px) {
+      margin: 0 0.5rem;
     }
   }
 
-  .links {
-    display: flex;
-    gap: 1.5rem;
-    align-items: center;
-
-    a,
-    button {
-      color: $secondary-text;
-      font-weight: 500;
-      background: none;
-      border: none;
-      font-size: 0.95rem;
-      transition: color 0.2s;
-
-      &:hover {
-        color: $primary;
-      }
-    }
-
-    .cart-badge {
-      background: $primary;
-      color: $white;
-      padding: 0.125rem 0.5rem;
-      border-radius: 999px;
-      font-size: 0.75rem;
-      margin-left: 0.25rem;
-    }
-  }
-}
-
-@media (max-width: 768px) {
-  .navbar {
-    .search {
-      display: none;
-    }
+  .profileSection {
+    flex: 0 0 auto;
   }
 }

@@ -1,0 +1,53 @@
+@use "../../styles/variables" as *;
+
+.cartSection {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: #f8fafc;
+
+      .cartIcon {
+        color: $primary; // Turns blue on hover
+      }
+    }
+  }
+  .cartText{
+      margin-left: 10px;
+      color: $secondary-text;
+    }
+
+  .iconWrapper {
+    position: relative; // Absolute base for the badge
+    display: flex;
+    align-items: center;
+
+    .cartIcon {
+      font-size: 1.6rem;
+      color: $secondary-text;
+      transition: color 0.2s;
+    }
+
+    .badge {
+      position: absolute;
+      top: -6px;
+      right: -8px;
+      background-color: #ef4444; // Bright red
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      min-width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #fff; // "Cutout" effect against the background
+      padding: 2px;
+    }
+  }
