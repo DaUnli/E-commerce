@@ -22,9 +22,6 @@ const Home = () => {
   return (
     <>
       <Navbar />
-      <div>
-        category
-      </div>
       <div className={styles.container}>
 
         <main className={styles.content}>

@@ -5,6 +5,7 @@ import ProfileInfo from "../Profile/Profile";
 import styles from "./Navbar.module.scss";
 import Cart from "../Cart/Cart";
 import Location from "../Location/Location";
+import Menu from "../Menu/Menu";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -12,8 +13,18 @@ const Navbar = () => {
   const [userInfo, setUserInfo] = useState({
     fullName: "Cathleah Grace",
   });
-  const [locationbar, setLocationbar] = useState("Gensan");
-  
+  const [locationbar, setLocationbar] = useState({
+    HouseUnitBlockLotNumber: "Blk 5 Lot 3",
+    StreetName: "Rizal Street",
+    PurokSitio: "Purok 2",
+    Barangay: "Apopong",
+    Municipality: "Davao City",
+    Province: "Davao del Sur",
+    Region: "Region XI",
+    ZIP: "8000",
+    Country: "Philippines"
+  });
+
   // Example cart count - this would usually come from a Context or Redux
   const [cartCount, setCartCount] = useState(8);
 
@@ -29,32 +40,38 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={styles.navbar}>
-      <div className={styles.logo}>
-        <Link to="/">
-          <img src="/logo.png" alt="Logo" className={styles.logoImage} />
-        </Link>
-      </div>
+    <>
+      <nav className={styles.navbar}>
+        <div className={styles.logo}>
+          <Link to="/">
+            <img src="/logo.png" alt="Logo" className={styles.logoImage} />
+          </Link>
+        </div>
 
-      <div className={styles.location}>
-        <Location locationbar={locationbar}/>
-      </div>
+        <div className={styles.location}>
+          <Location locationbar={locationbar} />
+        </div>
 
-      <div className={styles.searchSection}>
-        <Searchbar 
-          value={searchTerm} 
-          onChange={({ target }) => setSearchTerm(target.value)}
-          handleSearch={handleSearch}
-        />
-      </div>
+        <div className={styles.searchSection}>
+          <Searchbar
+            value={searchTerm}
+            onChange={({ target }) => setSearchTerm(target.value)}
+            handleSearch={handleSearch}
+          />
+        </div>
 
-      {/* Cart Icon Section */}
-      <Cart cartCount={cartCount}/>
+        <Cart cartCount={cartCount} />
 
-      <div className={styles.profileSection}>
-        <ProfileInfo userInfo={userInfo} onLogout={onLogout} />
+        <div className={styles.profileSection}>
+          <ProfileInfo userInfo={userInfo} onLogout={onLogout} />
+        </div>
+      </nav>
+
+      {/* 🔥 Secondary navbar (menu) */}
+      <div className={styles.secondaryNavbar}>
+        <Menu />
       </div>
-    </nav>
+    </>
   );
 };
 

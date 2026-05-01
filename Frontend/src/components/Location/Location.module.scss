@@ -1,34 +1,69 @@
 @use "../../styles/variables" as *;
 
 .locationSection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 6px 12px;
+  border-radius: 8px;
+
+  .iconWrapper {
+    font-size: 1.4rem;
+    color: #64748b;
     display: flex;
-    flex-direction: row;
     align-items: center;
-    gap: 0.5rem;
-    text-decoration: none;
-    padding: 6px 12px;
-    border-radius: 8px;
+  }
 
-    .iconWrapper{
-        font-size: 1.4rem;
-        color: #64748b;
-        display: flex;
-        align-items: center;
+  .locationText {
+    font-size: 0.875rem;
 
+    p {
+      font-weight: 500;
+      font-size: x-small;
+      color: #475569;
+      white-space: nowrap;
     }
 
-    .locationText{
-        font-size: 0.875rem;
-
-        p{
-            font-weight: 500;
-            font-size: x-small;
-            color: #475569;
-            white-space: nowrap;
-        }
-        span{
-            font-weight: 600;
-            color: $primary-text;
-        }
+    span {
+      font-weight: 600;
+      color: $primary-text;
     }
+
+    .arrow {
+      margin-left: 10px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+  }
+}
+
+/* ✅ OUTSIDE (IMPORTANT) */
+.wrapper {
+  position: relative;
+}
+
+/* 🔥 Dark overlay */
+.overlay {
+  position: fixed;
+  width: 100%;
+}
+
+/* 🔥 Dropdown box */
+.dropdown {
+  position: absolute;
+  left: 0;
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  min-width: 250px;
+}
+
+/* arrow rotate */
+.open {
+  transform: rotate(180deg);
 }

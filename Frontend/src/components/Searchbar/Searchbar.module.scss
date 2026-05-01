@@ -1,3 +1,5 @@
+@use "../../styles/variables" as *;
+
 .searchWrapper {
   display: flex;
   align-items: center;
@@ -10,7 +12,7 @@
 
   &:focus-within {
     background-color: #ffffff;
-    border-color: #bfdbfe; // blue-200
+    border-color: $primary; // blue-200
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   }
 }
@@ -61,7 +63,7 @@
   &.search {
     &:hover {
       background-color: #eff6ff;
-      color: #2563eb;
+      color: $primary;
     }
   }
 }
