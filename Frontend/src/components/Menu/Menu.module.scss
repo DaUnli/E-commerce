@@ -29,7 +29,7 @@
   cursor: pointer;
   font-weight: 600;
 
-  .menuIcon{
+  .menuIcon {
     display: flex;
     align-items: center;
     background: none;
@@ -37,10 +37,14 @@
     cursor: pointer;
     transition: 0.3s;
     font-size: 20px;
+
     &:hover {
       color: $primary;
     }
-
+  }
+  p {
+    font-size: 14px;
+    color: $primary;
   }
 }
 
@@ -55,11 +59,18 @@
     cursor: pointer;
     padding: 6px 10px;
     font-size: 14px;
-    color: #333;
+    color: $primary-text;
     transition: 0.3s;
+    font-weight: 500;
 
     &:hover {
-      color: #2563eb;
+      background: $background;
+      color: $primary;
+    }
+
+    &.active {
+      background: $background;
+      color: $primary;
     }
   }
 }

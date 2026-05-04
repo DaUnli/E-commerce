@@ -13,7 +13,7 @@ const Menu = () => {
                     <button className={styles.menuIcon}>
                         <IoIosMenu />
                     </button>
-                    <p>All Category</p>
+                    <p>All Categories</p>
                 </div>
             </div>
 

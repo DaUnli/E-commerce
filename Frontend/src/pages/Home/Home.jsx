@@ -3,6 +3,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner"; // Import your spinner
 import styles from "./Home.module.scss";
 import sample from "../../assets/sample.png"
+import Cheackout from "../Cheackout/Cheackout";
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -29,9 +30,7 @@ const Home = () => {
 
         </main>
         <div className={styles.product}>
-          <details>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nihil accusamus reprehenderit earum fugit in qui repudiandae blanditiis quod? Enim delectus minus cupiditate, animi blanditiis aut at voluptates sapiente voluptatum rerum.
-          </details>
+          <Cheackout />
         </div>
       </div>
     </>
