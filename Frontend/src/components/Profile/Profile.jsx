@@ -17,9 +17,9 @@ const ProfileInfo = ({ userInfo, onLogout }) => {
         </Link>
       ) : (
         <>
-          <div className={styles.avatar}>
+          {/* <div className={styles.avatar}>
             {getInitials(userInfo.fullName)}
-          </div>
+          </div> */}
 
           <div className={styles.details}>
             <p className={styles.userName}>{userInfo.fullName}</p>

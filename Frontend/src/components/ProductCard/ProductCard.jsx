@@ -1,55 +1,62 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
-import { CartContext } from "../../context/CartContext";
+import React from "react";
+import { FaTrash, FaStar } from "react-icons/fa";
 import styles from "./ProductCard.module.scss";
 
-
-
-const ProductCard = ({ product }) => {
-  const { addToCart } = useContext(CartContext);
-
+const ProductCard = ({
+  name,
+  description,
+  image,
+  price,
+  rating = 0,
+  quantity = 1,
+  tags = [],
+  onDelete,
+}) => {
   return (
-    <div className={styles.cardContainer}>
-      <div className={styles.imageArea}>
-        <img
-          src={product.images?.[0]?.url || "https://via.placeholder.com/200"}
-          alt={product.name}
-        />
-        {product.stock < 1 && (
-          <span className={styles.soldOut}>Out of Stock</span>
-        )}
+    <div className={styles.card}>
+      
+      {/* Image */}
+      <div className={styles.image}>
+        <img src={image} alt={name} />
       </div>
 
-      <div className={styles.content}>
-        <p className={styles.categoryText}>{product.category}</p>
+      {/* Body */}
+      <div className={styles.body}>
+        <h3 className={styles.name}>{name}</h3>
 
-        <Link to={`/product/${product._id}`} className={styles.productName}>
-          {product.name}
-        </Link>
+        <p className={styles.description}>
+          {description?.slice(0, 80)}
+          {description?.length > 80 && "..."}
+        </p>
 
-        <div className={styles.ratingBox}>
-          <span className={styles.stars}>
-            {"★".repeat(Math.round(product.ratings || 0))}
-          </span>
-          <span className={styles.reviewCount}>
-            ({product.numOfReviews || 0})
-          </span>
+        {/* Rating */}
+        <div className={styles.rating}>
+          {[...Array(5)].map((_, i) => (
+            <FaStar
+              key={i}
+              className={i < rating ? styles.active : ""}
+            />
+          ))}
         </div>
 
-        <div className={styles.priceRow}>
-          <span className={styles.priceTag}>
-            ${product.price.toFixed(2)}
-          </span>
+        {/* Price + Stock */}
+        <div className={styles.meta}>
+          <span className={styles.price}>₱{price}</span>
+          <span className={styles.quantity}>Stock: {quantity}</span>
+        </div>
 
-          <button
-            className={styles.actionBtn}
-            disabled={product.stock < 1}
-            onClick={() => addToCart(product._id, 1)}
-          >
-            {product.stock < 1 ? "Unavailable" : "Add to Cart"}
-          </button>
+        {/* Tags */}
+        <div className={styles.tags}>
+          {tags.map((tag, index) => (
+            <span key={index}>🇵🇭 {tag}</span>
+          ))}
         </div>
       </div>
+
+      {/* Delete */}
+      <button className={styles.delete} onClick={onDelete}>
+        <FaTrash />
+      </button>
     </div>
   );
 };
