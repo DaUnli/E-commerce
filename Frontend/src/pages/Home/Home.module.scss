@@ -1,46 +1,196 @@
 @use "../../styles/variables" as *;
 
 .container {
-  margin: 0;
-  padding: 0;
-  background: $white;
   display: flex;
   flex-direction: row;
+  padding: 10px;
   min-height: 100vh;
-  gap: 10px;
-  margin: 10px;
+}
 
-  .content {
-    background: $white;
-    border: $border-color solid 1px;
-    border-radius: $radius-md;
-    width: 75%;
-    padding: 10px;
-    height: 100vh;
-    display: flex;
+/* MAIN CONTENT (SMALLER) */
+.content {
+  flex: 2; /* 🔥 smaller than before */
+  background: $white;
+  border: $border-color solid 1px;
+  padding: 12px;
+  margin: 55px 0 0 0;
+  border-radius: $radius-md;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* BANNER */
+.sample {
+  width: 100%;
+  height: 220px; /* 🔥 smaller banner */
+  border-radius: $radius-md;
+  object-fit: cover;
+}
+
+/* PRODUCT GRID */
+.productGrid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(180px, 1fr)
+  ); /* 🔥 smaller cards */
+  gap: 12px;
+}
+
+/* CART SIDEBAR (RIGHT SIDE) */
+.cartWrapper {
+  flex: 1; /* 🔥 smaller cart */
+  max-width: 350px; /* fixed smaller width */
+  background: $white;
+  border: $border-color solid 1px;
+  border-radius: $radius-md;
+  padding: 10px;
+
+  position: sticky;
+  top: 100px;
+  height: fit-content;
+}
+
+.productGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+
+/* ⭐ MODAL */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* ⭐ BLUR EFFECT */
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
+}
+
+.modalContent {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+
+  width: 92%;
+  max-width: 900px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  padding: 20px;
+}
+
+/* close button */
+.closeBtn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  border: none;
+  background: #ff4d4f;
+  color: white;
+  font-size: 14px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* layout */
+.modalGrid {
+  display: flex;
+  gap: 20px;
+}
+
+/* image side */
+.modalImage {
+  flex: 1;
+}
+
+.modalImage img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* info side */
+.modalInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.description {
+  color: #555;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.price {
+  font-size: 24px;
+  font-weight: bold;
+  color: #222;
+}
+
+/* tags */
+.tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tags span {
+  background: #f2f2f2;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+/* add to cart button */
+.addToCartBtn {
+  margin-top: auto;
+  background: #ff7a00;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.addToCartBtn:hover {
+  background: #e96d00;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 1024px) {
+  .container {
     flex-direction: column;
-
-    .sample {
-      width: 100%;
-      height: 300px;
-      border-radius: $radius-md;
-
-      @media (max-width: 768px) {
-        height: 200px;
-      }
-
-      @media (max-width: 480px) {
-        height: 160px;
-      }
-    }
   }
 
-  .product {
-    background: $white;
-    border: $border-color solid 1px;
-    border-radius: $radius-md;
-    padding: 2px;
-    width: 30%;
-    height: 100vh;
+  .cartWrapper {
+    max-width: 100%;
+    position: static;
   }
 }

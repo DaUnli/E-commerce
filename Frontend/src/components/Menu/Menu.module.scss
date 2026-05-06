@@ -5,15 +5,14 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 20px;
-  background: #fff;
-  border-bottom: 1px solid #e5e7eb;
+  background: $white;
+  border-bottom: 1px solid $border-color;
 
   /* 🔥 make it stick */
-  position: sticky;
+  position: fixed;
   top: 70px; /* adjust based on your top navbar height */
   z-index: 999;
-
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  width: 100%;
 }
 
 /* LEFT */

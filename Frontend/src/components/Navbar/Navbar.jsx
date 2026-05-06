@@ -7,7 +7,7 @@ import Cart from "../Cart/Cart";
 import Location from "../Location/Location";
 import Menu from "../Menu/Menu";
 
-const Navbar = () => {
+const Navbar = ({ cartCount }) => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [userInfo, setUserInfo] = useState({
@@ -24,9 +24,6 @@ const Navbar = () => {
     ZIP: "8000",
     Country: "Philippines"
   });
-
-  // Example cart count - this would usually come from a Context or Redux
-  const [cartCount, setCartCount] = useState(8);
 
   const onLogout = () => {
     setUserInfo(null);

@@ -1,5 +1,5 @@
 import React from "react";
-import { FaTrash, FaStar } from "react-icons/fa";
+import { FaTrash, FaStar, FaShoppingCart } from "react-icons/fa";
 import styles from "./ProductCard.module.scss";
 
 const ProductCard = ({
@@ -11,53 +11,79 @@ const ProductCard = ({
   quantity = 1,
   tags = [],
   onDelete,
+  onAddToCart,
+  onClick, // ⭐ ADD THIS
 }) => {
+  const isOutOfStock = quantity <= 0;
+
   return (
-    <div className={styles.card}>
-      
+    <article className={styles.card} onClick={onClick}>
+      {/* Delete */}
+      {onDelete && (
+        <button
+          className={styles.delete}
+          onClick={(e) => {
+            e.stopPropagation(); // prevent modal open
+            onDelete();
+          }}
+        >
+          <FaTrash />
+        </button>
+      )}
+
       {/* Image */}
-      <div className={styles.image}>
-        <img src={image} alt={name} />
+      <div className={styles.imageWrapper}>
+        <img src={image} alt={name} loading="lazy" />
+        {isOutOfStock && (
+          <span className={styles.outOfStockBadge}>Sold Out</span>
+        )}
       </div>
 
       {/* Body */}
       <div className={styles.body}>
-        <h3 className={styles.name}>{name}</h3>
-
-        <p className={styles.description}>
-          {description?.slice(0, 80)}
-          {description?.length > 80 && "..."}
-        </p>
+        <div className={styles.header}>
+          <h3 className={styles.name}>{name}</h3>
+          <span className={styles.price}>₱{Number(price).toFixed(2)}</span>
+        </div>
 
         {/* Rating */}
         <div className={styles.rating}>
           {[...Array(5)].map((_, i) => (
             <FaStar
               key={i}
-              className={i < rating ? styles.active : ""}
+              className={i < rating ? styles.activeStar : styles.inactiveStar}
             />
           ))}
+          <span className={styles.stockText}>
+            {isOutOfStock ? "Out of stock" : `${quantity} in stock`}
+          </span>
         </div>
 
-        {/* Price + Stock */}
-        <div className={styles.meta}>
-          <span className={styles.price}>₱{price}</span>
-          <span className={styles.quantity}>Stock: {quantity}</span>
-        </div>
+        <p className={styles.description}>{description}</p>
 
         {/* Tags */}
-        <div className={styles.tags}>
-          {tags.map((tag, index) => (
-            <span key={index}>🇵🇭 {tag}</span>
-          ))}
-        </div>
-      </div>
+        {tags.length > 0 && (
+          <div className={styles.tags}>
+            {tags.map((tag, index) => (
+              <span key={index}>🇵🇭 {tag}</span>
+            ))}
+          </div>
+        )}
 
-      {/* Delete */}
-      <button className={styles.delete} onClick={onDelete}>
-        <FaTrash />
-      </button>
-    </div>
+        {/* Add to Cart */}
+        <button
+          className={styles.btnAction}
+          disabled={isOutOfStock}
+          onClick={(e) => {
+            e.stopPropagation();
+            onAddToCart && onAddToCart();
+          }}
+        >
+          <FaShoppingCart />
+          {isOutOfStock ? "Unavailable" : "Add to Cart"}
+        </button>
+      </div>
+    </article>
   );
 };
 
