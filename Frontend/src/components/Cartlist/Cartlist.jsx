@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from "./Cartlist.module.scss";
 import { FaTrash, FaMinus, FaPlus, FaShoppingCart } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 const Cartlist = ({
     cartItems,
@@ -35,14 +36,14 @@ const Cartlist = ({
                         {cartItems.map((item) => (
                             <div key={item.id} className={styles.cartItem}>
                                 <img src={item.image} alt={item.name} />
-                                
+
                                 <div className={styles.itemDetails}>
                                     <h4>{item.name}</h4>
                                     <p className={styles.itemDesc}>{item.description}</p>
-                                    
+
                                     <div className={styles.itemActions}>
                                         <span className={styles.itemPrice}>₱{item.price.toFixed(2)}</span>
-                                        
+
                                         <div className={styles.qtyControls}>
                                             <button onClick={() => decreaseQty(item.id)} disabled={item.quantity <= 1}>
                                                 <FaMinus size={10} />
@@ -79,7 +80,9 @@ const Cartlist = ({
                             <span>Total</span>
                             <span className={styles.totalPrice}>₱{total.toFixed(2)}</span>
                         </div>
-                        <button className={styles.btnCheckout}>Proceed to Checkout</button>
+                        <Link to="/checkout">
+                            <button className={styles.btnCheckout}>Proceed to Checkout</button>
+                        </Link>
                     </div>
                 </>
             )}
