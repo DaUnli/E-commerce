@@ -237,3 +237,32 @@
     }
   }
 }
+
+@media (max-width: 480px) {
+  .cartSidebar {
+    padding: 16px;
+  }
+
+  .cartItem {
+    gap: 10px;
+
+    img {
+      width: 56px;
+      height: 56px;
+    }
+  }
+
+  .itemDesc {
+    -webkit-line-clamp: 2;
+  }
+
+  .itemActions {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .btnCheckout {
+    padding: 14px;
+    font-size: 15px;
+  }
+}

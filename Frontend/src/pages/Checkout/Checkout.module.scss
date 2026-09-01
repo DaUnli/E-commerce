@@ -228,3 +228,25 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 600px) {
+  .checkout {
+    padding: 1rem;
+
+    &__container {
+      gap: 20px;
+    }
+  }
+
+  .title {
+    font-size: 26px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .row {
+    grid-template-columns: 1fr;
+  }
+}

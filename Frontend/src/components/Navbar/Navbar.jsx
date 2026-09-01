@@ -50,7 +50,7 @@ const Navbar = () => {
   };
 
   return (
-    <>
+    <header className={styles.header}>
       <nav className={styles.navbar}>
         <div className={styles.logo}>
           <Link to="/">
@@ -84,7 +84,7 @@ const Navbar = () => {
       <div className={styles.secondaryNavbar}>
         <Menu />
       </div>
-    </>
+    </header>
   );
 };
 

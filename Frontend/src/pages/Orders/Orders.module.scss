@@ -245,6 +245,56 @@
 }
 
 @media (max-width: 600px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .pageTitle {
+    font-size: 1.5rem;
+  }
+
+  .tabs {
+    width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    button {
+      padding: 0.6rem 1rem;
+      white-space: nowrap;
+    }
+  }
+
+  .orderCard {
+    padding: 1rem;
+  }
+
+  .orderHeader {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    .badge {
+      margin-left: auto;
+    }
+  }
+
+  .itemRow {
+    align-items: flex-start;
+    flex-wrap: wrap;
+
+    img {
+      width: 40px;
+      height: 40px;
+    }
+
+    .itemPrice {
+      min-width: 0;
+    }
+  }
+
   .details {
     grid-template-columns: 1fr;
   }

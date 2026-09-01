@@ -20,6 +20,10 @@
   .cartText{
       margin-left: 10px;
       color: $secondary-text;
+
+      @media (max-width: 768px) {
+        display: none;
+      }
     }
 
   .iconWrapper {

@@ -179,3 +179,17 @@
     color: $danger;
   }
 }
+
+@media (max-width: 480px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .centerBox {
+    padding: 2rem 1.25rem;
+  }
+
+  .payCard {
+    padding: 1.5rem 1.25rem;
+  }
+}

@@ -11,6 +11,7 @@ body {
   background-color: $background;
   color: $primary-text;
   line-height: 1.5;
+  overflow-x: hidden;
 }
 
 a {

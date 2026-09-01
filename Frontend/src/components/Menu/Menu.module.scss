@@ -4,15 +4,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 0.5rem;
   padding: 10px 20px;
   background: $white;
-  border-bottom: 1px solid $border-color;
-
-  /* 🔥 make it stick */
-  position: fixed;
-  top: 70px; /* adjust based on your top navbar height */
-  z-index: 999;
   width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 /* LEFT */
@@ -51,6 +48,14 @@
 .center {
   display: flex;
   gap: 12px;
+  flex: 1;
+  justify-content: center;
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   button {
     background: none;
@@ -61,6 +66,7 @@
     color: $primary-text;
     transition: 0.3s;
     font-weight: 500;
+    white-space: nowrap;
 
     &:hover {
       background: $background;
@@ -82,4 +88,28 @@
   cursor: pointer;
   font-weight: 500;
   color: $danger;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .menu {
+    padding: 6px 10px;
+    justify-content: flex-start;
+  }
+
+  .menuButton {
+    padding-right: 0.25rem;
+
+    p {
+      display: none;
+    }
+  }
+
+  .center {
+    justify-content: flex-start;
+  }
+
+  .right {
+    display: none;
+  }
 }

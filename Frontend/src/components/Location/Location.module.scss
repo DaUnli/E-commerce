@@ -49,22 +49,24 @@
   position: relative;
 }
 
-/* 🔥 Dark overlay */
+/* 🔥 Dark overlay (full-screen click catcher) */
 .overlay {
   position: fixed;
-  width: 100%;
+  inset: 0;
 }
 
 /* 🔥 Dropdown box */
 .dropdown {
-  position: absolute;
-  left: 0;
+  position: fixed;
+  top: 84px;
+  left: 24px;
   background: white;
   padding: 15px;
   border-radius: 12px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
   z-index: 1000;
   min-width: 250px;
+  max-width: calc(100vw - 48px);
 }
 
 /* arrow rotate */
