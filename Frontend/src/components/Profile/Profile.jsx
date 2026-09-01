@@ -7,8 +7,7 @@ import styles from "./Profile.module.scss";
 const ProfileInfo = ({ userInfo, onLogout }) => {
   return (
     <div className={styles.profileWrapper}>
-      {/* 1. Changed condition: If NO userInfo, show login link */}
-      {userInfo ? (
+      {!userInfo ? (
         <Link to="/login" className={styles.loginLink}>
           <div className={styles.loginIconWrapper}>
             <GoPerson />
@@ -17,12 +16,12 @@ const ProfileInfo = ({ userInfo, onLogout }) => {
         </Link>
       ) : (
         <>
-          {/* <div className={styles.avatar}>
-            {getInitials(userInfo.fullName)}
-          </div> */}
+          <div className={styles.avatar}>{getInitials(userInfo.fullName)}</div>
 
           <div className={styles.details}>
-            <p className={styles.userName}>{userInfo.fullName}</p>
+            <Link to="/orders" className={styles.userName}>
+              {userInfo.fullName}
+            </Link>
             <button className={styles.logoutBtn} onClick={onLogout}>
               Logout
             </button>

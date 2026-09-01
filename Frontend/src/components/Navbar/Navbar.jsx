@@ -1,19 +1,24 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import Searchbar from "../Searchbar/Searchbar";
 import ProfileInfo from "../Profile/Profile";
 import styles from "./Navbar.module.scss";
 import Cart from "../Cart/Cart";
 import Location from "../Location/Location";
 import Menu from "../Menu/Menu";
+import { selectCartCount, resetCartState } from "../../store/cartSlice";
+import { logout } from "../../store/authSlice";
+import { setSearchQuery, setCategory } from "../../store/productsSlice";
 
-const Navbar = ({ cartCount }) => {
+const Navbar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const cartCount = useSelector(selectCartCount);
+  const user = useSelector((state) => state.auth.user);
+
   const [searchTerm, setSearchTerm] = useState("");
-  const [userInfo, setUserInfo] = useState({
-    fullName: "Cathleah Grace",
-  });
-  const [locationbar, setLocationbar] = useState({
+  const [locationbar] = useState({
     HouseUnitBlockLotNumber: "Blk 5 Lot 3",
     StreetName: "Rizal Street",
     PurokSitio: "Purok 2",
@@ -22,18 +27,26 @@ const Navbar = ({ cartCount }) => {
     Province: "Davao del Sur",
     Region: "Region XI",
     ZIP: "8000",
-    Country: "Philippines"
+    Country: "Philippines",
   });
 
   const onLogout = () => {
-    setUserInfo(null);
+    dispatch(logout());
+    dispatch(resetCartState());
     navigate("/login");
   };
 
   const handleSearch = () => {
     if (searchTerm) {
-      // navigate(`/search?query=${searchTerm}`);
+      dispatch(setSearchQuery(searchTerm));
+      dispatch(setCategory("all"));
+      navigate("/home");
     }
+  };
+
+  const handleClearSearch = () => {
+    setSearchTerm("");
+    dispatch(setSearchQuery(""));
   };
 
   return (
@@ -54,17 +67,20 @@ const Navbar = ({ cartCount }) => {
             value={searchTerm}
             onChange={({ target }) => setSearchTerm(target.value)}
             handleSearch={handleSearch}
+            onClearSearch={handleClearSearch}
           />
         </div>
 
         <Cart cartCount={cartCount} />
 
         <div className={styles.profileSection}>
-          <ProfileInfo userInfo={userInfo} onLogout={onLogout} />
+          <ProfileInfo
+            userInfo={user ? { fullName: user.name } : null}
+            onLogout={onLogout}
+          />
         </div>
       </nav>
 
-      {/* 🔥 Secondary navbar (menu) */}
       <div className={styles.secondaryNavbar}>
         <Menu />
       </div>

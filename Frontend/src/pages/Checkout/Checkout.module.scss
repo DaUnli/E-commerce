@@ -1,15 +1,4 @@
-/* Checkout.scss */
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  background: #f5f7fb;
-  font-family: "Inter", sans-serif;
-}
+@use "../../styles/variables" as *;
 
 .checkout {
   min-height: 100vh;
@@ -19,7 +8,7 @@ body {
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 30px;
-    max-width: 1400px;
+    max-width: 1200px;
     margin: auto;
   }
 
@@ -31,27 +20,34 @@ body {
 
   &__right {
     position: sticky;
-    top: 30px;
+    top: 100px;
     height: fit-content;
   }
 }
 
 .title {
-  font-size: 40px;
+  font-size: 34px;
   font-weight: 700;
-  color: #111827;
+  color: $text-main;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
 }
 
 .card,
 .summary {
-  background: white;
-  border-radius: 24px;
+  background: $white;
+  border-radius: 20px;
   padding: 28px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  box-shadow: $shadow-soft;
+  border: 1px solid $border-color;
 
   h2 {
     margin-bottom: 20px;
-    color: #111827;
+    color: $text-main;
   }
 }
 
@@ -68,17 +64,17 @@ body {
   }
 
   input {
-    height: 55px;
-    border: 1px solid #e5e7eb;
-    border-radius: 14px;
+    height: 52px;
+    border: 1px solid $border-color;
+    border-radius: 12px;
     padding: 0 18px;
     font-size: 15px;
     transition: 0.3s;
+    outline: none;
 
     &:focus {
-      outline: none;
-      border-color: #6366f1;
-      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+      border-color: $primary;
+      box-shadow: 0 0 0 4px rgba(0, 128, 97, 0.12);
     }
   }
 }
@@ -97,23 +93,46 @@ body {
   button {
     flex: 1;
     height: 50px;
-    border-radius: 14px;
-    border: 1px solid #e5e7eb;
-    background: white;
+    border-radius: 12px;
+    border: 1px solid $border-color;
+    background: $white;
     font-weight: 600;
     cursor: pointer;
     transition: 0.3s;
+    color: $text-main;
 
     &:hover {
-      background: #f3f4f6;
+      background: $gray;
     }
 
     &.active {
-      background: #6366f1;
-      color: white;
+      background: $primary;
+      color: $white;
       border: none;
     }
   }
+}
+
+.note {
+  font-size: 14px;
+  color: $text-light;
+  background: $gray;
+  padding: 14px;
+  border-radius: 10px;
+}
+
+.error {
+  color: $danger;
+  font-size: 14px;
+  text-align: center;
+}
+
+.products {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 .product {
@@ -122,68 +141,73 @@ body {
   gap: 16px;
 
   img {
-    width: 80px;
-    height: 80px;
-    border-radius: 18px;
+    width: 70px;
+    height: 70px;
+    border-radius: 12px;
     object-fit: cover;
+    background: $gray;
   }
 
   h3 {
-    font-size: 16px;
-    margin-bottom: 5px;
+    font-size: 15px;
+    margin-bottom: 4px;
+    color: $text-main;
   }
 
   p {
-    color: #6b7280;
-    font-size: 14px;
+    color: $text-light;
+    font-size: 13px;
   }
 
   span {
     margin-left: auto;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 15px;
+    color: $primary;
+    white-space: nowrap;
   }
 }
 
 .line {
   height: 1px;
-  background: #e5e7eb;
-  margin: 24px 0;
+  background: $border-color;
+  margin: 22px 0;
 }
 
 .price {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 16px;
-  color: #374151;
+  margin-bottom: 14px;
+  color: $text-light;
 
   &.total {
     font-size: 22px;
     font-weight: 700;
-    color: #111827;
+    color: $text-main;
+    margin-top: 6px;
+
+    span {
+      color: $primary;
+    }
   }
 }
 
 .checkout-btn {
   width: 100%;
-  height: 60px;
+  height: 58px;
   border: none;
-  border-radius: 18px;
-  background: linear-gradient(
-    135deg,
-    #6366f1,
-    #8b5cf6
-  );
-  color: white;
+  border-radius: 14px;
+  background: $primary;
+  color: $white;
   font-size: 16px;
   font-weight: 700;
-  margin-top: 20px;
+  margin-top: 18px;
   cursor: pointer;
   transition: 0.3s;
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 15px 25px rgba(99, 102, 241, 0.25);
+    box-shadow: 0 12px 24px rgba(0, 128, 97, 0.25);
   }
 }
 
@@ -193,6 +217,10 @@ body {
 
     &__container {
       grid-template-columns: 1fr;
+    }
+
+    &__right {
+      position: static;
     }
   }
 

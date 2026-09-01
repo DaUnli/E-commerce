@@ -1,141 +1,139 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import styles from "./Home.module.scss";
 import sample from "../../assets/sample.png";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import Cartlist from "../../components/Cartlist/Cartlist";
+import Toast from "../../components/Toast/Toast";
+import {
+  fetchProducts,
+  selectVisibleProducts,
+} from "../../store/productsSlice";
+import {
+  addToCart,
+  increaseQty,
+  decreaseQty,
+  removeFromCart,
+  clearCart,
+  fetchCart,
+  selectSubtotal,
+} from "../../store/cartSlice";
+import { showToast } from "../../store/toastSlice";
 
-const BEST_SELLERS = [
-  {
-    id: 6,
-    name: "Chicken Shawarma",
-    description: "Delicious Filipino-style shawarma with garlic sauce",
-    image: "./7.png",
-    price: 120,
-    rating: 4.5,
-    quantity: 2,
-    tags: ["Street Food", "Davao", "Best Seller"],
-  },
-  {
-    id: 7,
-    name: "Beef Shawarma",
-    description: "Juicy beef shawarma wrapped in soft pita bread",
-    image: "./logo.png",
-    price: 140,
-    rating: 4.6,
-    quantity: 1,
-    tags: ["Street Food", "Beef", "Popular"],
-  },
-  {
-    id: 8,
-    name: "Pork Shawarma",
-    description: "Savory pork shawarma with special creamy sauce",
-    image: "https://via.placeholder.com/300",
-    price: 130,
-    rating: 4.4,
-    quantity: 1,
-    tags: ["Street Food", "Pork", "Best Seller"],
-  },
-  {
-    id: 9,
-    name: "Chicken Kebab Wrap",
-    description: "Grilled chicken kebab wrapped with fresh vegetables",
-    image: "https://via.placeholder.com/300",
-    price: 125,
-    rating: 4.3,
-    quantity: 1,
-    tags: ["Grilled", "Healthy", "Chicken"],
-  },
-  {
-    id: 10,
-    name: "Falafel Shawarma",
-    description: "Crispy falafel wrap with creamy tahini sauce",
-    image: "https://via.placeholder.com/300",
-    price: 110,
-    rating: 4.2,
-    quantity: 1,
-    tags: ["Vegetarian", "Healthy", "Street Food"],
-  },
-];
+const DELIVERY_FEE = 35;
 
 const Home = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [products, setProducts] = useState(BEST_SELLERS);
-  const [cartItems, setCartItems] = useState([
-    { ...BEST_SELLERS[0], quantity: 1 },
-    { ...BEST_SELLERS[1], quantity: 2 },
-    { ...BEST_SELLERS[2], quantity: 2 },
-  ]);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  // ⭐ MODAL STATE
+  const productsStatus = useSelector((state) => state.products.status);
+  const visibleProducts = useSelector(selectVisibleProducts);
+  const cartItems = useSelector((state) => state.cart.items);
+  const subtotal = useSelector(selectSubtotal);
+  const user = useSelector((state) => state.auth.user);
+
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  const subtotal = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
-  const deliveryFee = 35;
-  const total = subtotal + deliveryFee;
-
-  const handleRemove = (id) => {
-    setCartItems(cartItems.filter((item) => item.id !== id));
-  };
-
-  const clearCart = () => {
-    setCartItems([]);
-  };
+  const total = subtotal + DELIVERY_FEE;
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
+    if (productsStatus === "idle") {
+      dispatch(fetchProducts());
+    }
+  }, [productsStatus, dispatch]);
 
-    return () => clearTimeout(timer);
-  }, []);
+  useEffect(() => {
+    if (user) {
+      dispatch(fetchCart());
+    }
+  }, [user, dispatch]);
 
-  if (isLoading) {
+  const handleAddToCart = (product) => {
+    if (product.stock <= 0) return;
+    if (!user) {
+      dispatch(
+        showToast({
+          message: "Please login to add items to your cart",
+          type: "error",
+        })
+      );
+      navigate("/login");
+      return;
+    }
+    const result = dispatch(addToCart(product));
+    result.unwrap().then(
+      () =>
+        dispatch(
+          showToast({
+            message: `${product.name} added to cart`,
+            type: "success",
+          })
+        ),
+      (err) =>
+        dispatch(showToast({ message: err || "Failed to add to cart", type: "error" }))
+    );
+  };
+
+  if (productsStatus === "loading") {
     return <LoadingSpinner fullScreen={true} size="large" />;
   }
 
   return (
     <>
-      <Navbar cartCount={cartItems.length} />
+      <Navbar />
+      <Toast />
 
       <div className={styles.container}>
         <main className={styles.content}>
-          <img src={sample} alt="sample" className={styles.sample} />
+          <img src={sample} alt="banner" className={styles.sample} />
 
-          <div className={styles.productGrid}>
-            {products.map((product) => (
-              <ProductCard
-                key={product.id}
-                name={product.name}
-                description={product.description}
-                image={product.image}
-                price={product.price}
-                rating={product.rating}
-                quantity={product.quantity}
-                tags={product.tags}
-                onClick={() => setSelectedProduct(product)} // ⭐ OPEN MODAL
-              />
-            ))}
-          </div>
+          {visibleProducts.length === 0 ? (
+            <div className={styles.emptyState}>
+              <p>No products found.</p>
+              <button
+                onClick={() => navigate("/home")}
+                className={styles.emptyBtn}
+              >
+                Show all products
+              </button>
+            </div>
+          ) : (
+            <div className={styles.productGrid}>
+              {visibleProducts.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  name={product.name}
+                  description={product.description}
+                  image={product.image}
+                  price={product.price}
+                  rating={product.rating}
+                  quantity={product.stock}
+                  tags={product.tags}
+                  onClick={() => setSelectedProduct(product)}
+                  onAddToCart={() => handleAddToCart(product)}
+                />
+              ))}
+            </div>
+          )}
         </main>
 
         <div className={styles.cartWrapper}>
           <Cartlist
             cartItems={cartItems}
             subtotal={subtotal}
-            deliveryFee={deliveryFee}
+            deliveryFee={DELIVERY_FEE}
             total={total}
-            clearProducts={clearCart}
-            removeItem={handleRemove}
+            clearProducts={() => dispatch(clearCart())}
+            removeItem={(id) => dispatch(removeFromCart(id))}
+            increaseQty={(id) => dispatch(increaseQty(id))}
+            decreaseQty={(id) => dispatch(decreaseQty(id))}
           />
         </div>
       </div>
 
-      {/* ⭐ FULL SCREEN MODAL */}
       {selectedProduct && (
         <div
           className={styles.modalBackdrop}
@@ -145,7 +143,6 @@ const Home = () => {
             className={styles.modalContent}
             onClick={(e) => e.stopPropagation()}
           >
-
             <button
               className={styles.closeBtn}
               onClick={() => setSelectedProduct(null)}
@@ -154,14 +151,18 @@ const Home = () => {
             </button>
 
             <div className={styles.modalGrid}>
-
               <div className={styles.modalImage}>
-                <img src={selectedProduct.image} alt={selectedProduct.name} />
+                <img
+                  src={selectedProduct.image}
+                  alt={selectedProduct.name}
+                />
               </div>
 
               <div className={styles.modalInfo}>
                 <h2>{selectedProduct.name}</h2>
-                <p className={styles.description}>{selectedProduct.description}</p>
+                <p className={styles.description}>
+                  {selectedProduct.description}
+                </p>
                 <div className={styles.price}>₱{selectedProduct.price}</div>
 
                 <div className={styles.tags}>
@@ -170,17 +171,23 @@ const Home = () => {
                   ))}
                 </div>
 
+                <p className={styles.stockNote}>
+                  {selectedProduct.stock > 0
+                    ? `${selectedProduct.stock} in stock`
+                    : "Out of stock"}
+                </p>
+
                 <button
                   className={styles.addToCartBtn}
+                  disabled={selectedProduct.stock <= 0}
                   onClick={() => {
-                    setCartItems((prev) => [...prev, selectedProduct]);
+                    handleAddToCart(selectedProduct);
                     setSelectedProduct(null);
                   }}
                 >
                   Add to Cart
                 </button>
               </div>
-
             </div>
           </div>
         </div>

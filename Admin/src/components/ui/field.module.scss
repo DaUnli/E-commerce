@@ -1,0 +1,245 @@
+/* ===== Field (label + control + hint/error) ===== */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  margin-bottom: 1rem;
+
+  .labelRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  label {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--foreground);
+  }
+
+  .optional {
+    font-size: 0.6875rem;
+    color: var(--muted-foreground);
+    font-weight: 400;
+  }
+
+  .required {
+    color: var(--destructive);
+    margin-left: 0.125rem;
+  }
+
+  .hint {
+    font-size: 0.75rem;
+    color: var(--muted-foreground);
+  }
+
+  .error {
+    display: flex;
+    align-items: center;
+    gap: 0.3125rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--destructive);
+
+    svg {
+      flex-shrink: 0;
+    }
+  }
+
+  .full {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ===== Base control (Input / Select / Textarea) ===== */
+.control {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  border: 1px solid var(--input);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--foreground);
+  font-size: 0.875rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s;
+  position: relative;
+
+  &:hover:not(:has(input:disabled)) {
+    border-color: color-mix(in srgb, var(--ring) 55%, var(--border));
+  }
+
+  &:focus-within {
+    border-color: var(--ring);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 22%, transparent);
+  }
+
+  /* sizes */
+  &.sm {
+    padding: 0.3125rem 0.625rem;
+    font-size: 0.8125rem;
+    border-radius: calc(var(--radius) - 1px);
+  }
+  &.md {
+    padding: 0.5rem 0.75rem;
+  }
+  &.lg {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.9375rem;
+  }
+
+  &.error {
+    border-color: var(--destructive);
+
+    &:focus-within {
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 20%, transparent);
+    }
+  }
+
+  /* add-ons */
+  .addon {
+    display: flex;
+    align-items: center;
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+    flex-shrink: 0;
+
+    &.leading {
+      margin-left: 0.125rem;
+    }
+
+    &.trailing {
+      margin-right: 0.125rem;
+    }
+  }
+
+  .withLeading {
+    padding-left: 0.25rem;
+  }
+  .withTrailing {
+    padding-right: 0.25rem;
+  }
+}
+
+.element {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  padding: 0;
+
+  &::placeholder {
+    color: color-mix(in srgb, var(--muted-foreground) 75%, transparent);
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  /* number input spinners */
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  &[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+}
+
+/* disabled whole control */
+.disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ===== Select chevron ===== */
+.select {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  border: none;
+  outline: none;
+  flex: 1;
+  min-width: 0;
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+}
+
+.selectChevron {
+  display: flex;
+  color: var(--muted-foreground);
+  pointer-events: none;
+  font-size: 0.625rem;
+  margin-right: 0.125rem;
+}
+
+/* native option styling */
+.option {
+  color: var(--foreground);
+  background: var(--card);
+}
+
+/* ===== Textarea ===== */
+.textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* ===== Switch ===== */
+.switch {
+  width: 40px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--border);
+  border: none;
+  position: relative;
+  transition: background 0.18s ease;
+  flex-shrink: 0;
+
+  &.on {
+    background: var(--primary);
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.18s ease;
+  }
+
+  &.on::after {
+    transform: translateX(18px);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+/* ===== Clickable search field (grouped) ===== */
+.group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}

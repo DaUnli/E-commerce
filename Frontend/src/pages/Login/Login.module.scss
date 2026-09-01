@@ -106,5 +106,15 @@
         }
       }
     }
+
+    .hint {
+      margin-top: 1.25rem;
+      padding: 10px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: $secondary-text;
+      background: $gray;
+      border-radius: $radius-md;
+    }
   }
 }

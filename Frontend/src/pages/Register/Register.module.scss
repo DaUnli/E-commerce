@@ -39,12 +39,17 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 1rem;
+
+        @media (max-width: 520px) {
+          grid-template-columns: 1fr;
+        }
       }
 
       .field {
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
+        min-width: 0;
 
         label {
           font-size: 0.875rem;
@@ -54,15 +59,25 @@
 
         input,
         textarea {
+          width: 100%;
+          box-sizing: border-box;
           padding: 0.75rem 1rem;
           border: 1px solid #dee2e6;
           border-radius: $radius-md;
           font-size: 1rem;
+          color: $black;
+          background: $white;
           outline: none;
           font-family: inherit;
+          transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+          &::placeholder {
+            color: #adb5bd;
+          }
 
           &:focus {
             border-color: $primary;
+            box-shadow: 0 0 0 3px rgba(0, 128, 97, 0.15);
           }
         }
 

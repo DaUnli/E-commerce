@@ -1,0 +1,145 @@
+.tabs {
+  display: flex;
+  gap: 0.375rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+
+  .tab {
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--muted-foreground);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+
+    &:hover {
+      color: var(--foreground);
+    }
+
+    &.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+      font-weight: 600;
+    }
+  }
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+
+  .card {
+    padding: 1.25rem;
+
+    .cardTitle {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    .cardDesc {
+      font-size: 0.8125rem;
+      color: var(--muted-foreground);
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 1rem;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.toggleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .info {
+    .title {
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+    .desc {
+      font-size: 0.75rem;
+      color: var(--muted-foreground);
+    }
+  }
+
+  .switch {
+    width: 40px;
+    height: 22px;
+    border-radius: 999px;
+    background: var(--border);
+    border: none;
+    position: relative;
+    transition: background 0.15s;
+
+    &.on {
+      background: var(--primary);
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #fff;
+      transition: transform 0.15s;
+    }
+
+    &.on::after {
+      transform: translateX(18px);
+    }
+  }
+}
+
+.roleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.875rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 0.5rem;
+
+  .roleInfo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    .roleName {
+      font-weight: 500;
+      font-size: 0.875rem;
+    }
+
+    .perms {
+      font-size: 0.75rem;
+      color: var(--muted-foreground);
+    }
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.625rem;
+  margin-top: 1rem;
+}

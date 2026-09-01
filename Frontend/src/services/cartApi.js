@@ -11,4 +11,6 @@ export const cartApi = {
 
   removeFromCart: (productId) =>
     api.delete(`/cart/${productId}`),
+
+  clearCart: () => api.delete("/cart"),
 };

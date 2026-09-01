@@ -1,0 +1,112 @@
+@use "../../styles/variables" as *;
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1100;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid $border-color;
+  box-shadow: $shadow-soft;
+
+  .accent {
+    height: 3px;
+    background: linear-gradient(90deg, $primary 0%, $accent 100%);
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.75rem 2rem;
+    gap: 1rem;
+
+    .brand {
+      flex: 0 0 auto;
+
+      .logo {
+        height: 32px;
+        width: auto;
+        display: block;
+      }
+    }
+
+    .center {
+      flex: 1;
+      text-align: center;
+
+      .stepLabel {
+        display: inline-block;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: $primary;
+        background: rgba(0, 128, 97, 0.1);
+        padding: 0.15rem 0.6rem;
+        border-radius: 999px;
+        margin-bottom: 0.1rem;
+      }
+
+      .title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: $black;
+        margin: 0.1rem 0 0;
+        line-height: 1.2;
+      }
+    }
+
+    .right {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+
+      .secure {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: $primary;
+        white-space: nowrap;
+
+        .secureIcon {
+          font-size: 0.8rem;
+        }
+      }
+
+      .back {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: $secondary-text;
+        text-decoration: none;
+        transition: color 0.2s;
+
+        &:hover {
+          color: $primary;
+        }
+
+        .backIcon {
+          font-size: 0.8rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .bar {
+    .right {
+      .secure {
+        display: none;
+      }
+    }
+  }
+}

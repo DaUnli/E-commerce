@@ -1,6 +1,9 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import styles from "./Login.module.scss";
+import { login } from "../../store/authSlice";
+import { showToast } from "../../store/toastSlice";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -9,15 +12,21 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setLoading(true);
 
-    if (email == "Jamess@hemom.com" && password == "12345678") {
-      navigate('/home')
+    const result = await dispatch(login({ email, password }));
+    if (login.fulfilled.match(result)) {
+      dispatch(showToast({ message: "Welcome back!", type: "success" }));
+      navigate("/home");
     } else {
-      console.error(error.message)
+      setError(result.payload || "Invalid email or password");
     }
+    setLoading(false);
   };
 
   return (
@@ -55,6 +64,10 @@ const Login = () => {
             {loading ? "Signing in..." : "Sign In"}
           </button>
         </form>
+
+        <p className={styles.hint}>
+          Demo: <strong>Jamess@hemom.com</strong> / <strong>12345678</strong>
+        </p>
 
         <div className={styles.footer}>
           Don't have an account?

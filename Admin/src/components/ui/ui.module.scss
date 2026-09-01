@@ -1,0 +1,239 @@
+/* Inputs */
+.input,
+.textarea,
+.select {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--input);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--foreground);
+  font-size: 0.875rem;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  outline: none;
+
+  &:focus {
+    border-color: var(--ring);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 20%, transparent);
+  }
+
+  &::placeholder {
+    color: var(--muted-foreground);
+  }
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  margin-bottom: 1rem;
+
+  label {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--foreground);
+  }
+
+  .hint {
+    font-size: 0.75rem;
+    color: var(--muted-foreground);
+  }
+}
+
+/* Badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.gray {
+  background: var(--muted);
+  color: var(--muted-foreground);
+}
+.green {
+  background: color-mix(in srgb, var(--success) 15%, transparent);
+  color: var(--success);
+}
+.red {
+  background: color-mix(in srgb, var(--destructive) 15%, transparent);
+  color: var(--destructive);
+}
+.amber {
+  background: color-mix(in srgb, var(--warning) 18%, transparent);
+  color: var(--warning);
+}
+.blue {
+  background: color-mix(in srgb, var(--info) 15%, transparent);
+  color: var(--info);
+}
+.primary {
+  background: color-mix(in srgb, var(--primary) 15%, transparent);
+  color: var(--primary);
+}
+
+/* Stat card */
+.statCard {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  box-shadow: var(--shadow-sm);
+
+  .label {
+    font-size: 0.8125rem;
+    color: var(--muted-foreground);
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+  }
+
+  .value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-top: 0.25rem;
+  }
+
+  .delta {
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: 0.375rem;
+  }
+
+  .up {
+    color: var(--success);
+  }
+  .down {
+    color: var(--destructive);
+  }
+  .icon {
+    font-size: 1.1rem;
+    color: var(--muted-foreground);
+    margin-left: auto;
+  }
+}
+
+/* Table */
+.tableWrapper {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+
+  thead th {
+    text-align: left;
+    padding: 0.625rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--muted-foreground);
+    border-bottom: 1px solid var(--border);
+    background: var(--muted);
+    white-space: nowrap;
+  }
+
+  tbody td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  tbody tr:hover {
+    background: color-mix(in srgb, var(--muted) 50%, transparent);
+  }
+}
+
+/* EmptyState */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3rem 1.5rem;
+  color: var(--muted-foreground);
+
+  .icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+    opacity: 0.4;
+  }
+
+  h3 {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+    color: var(--foreground);
+  }
+
+  p {
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+    max-width: 320px;
+  }
+}
+
+/* Skeleton */
+.skeleton {
+  background: var(--muted);
+  border-radius: var(--radius);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Toolbar/filters row */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.searchInput {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+  max-width: 360px;
+
+  .searchIcon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted-foreground);
+  }
+
+  input {
+    padding-left: 2.25rem;
+  }
+}

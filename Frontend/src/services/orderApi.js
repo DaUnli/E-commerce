@@ -1,8 +1,7 @@
 import api from "./axios";
 
 export const orderApi = {
-  createOrder: (shippingAddress) =>
-    api.post("/orders", { shippingAddress }),
+  createOrder: (order) => api.post("/orders", order),
 
   getMyOrders: () => api.get("/orders"),
 
